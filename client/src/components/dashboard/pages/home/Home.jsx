@@ -32,7 +32,7 @@ export default function Home({ setAuth }) {
       <Sidebar />
       <div className='w-full px-8 py-8 pb-8 mb-4 bg-white border rounded shadow-md h-[900px] '>
         {/* HOME ITEMS */}
-        <div className='px-4 py-5 sm:px-6 rounded shadow-md bg-red-500 flex justify-between items-center'>
+        <div className='px-4 py-5 sm:px-6 rounded shadow-md bg-blue-500 flex justify-between items-center'>
           <div>
             <h3 className='text-xl font-medium leading-6 text-white'>
               WELCOME {name}

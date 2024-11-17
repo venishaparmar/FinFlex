@@ -38,18 +38,18 @@ export default function LoansWidget() {
     <div className='w-full'>
       {/* Loans */}
       <div
-        className='w-full  mt-5 p-8 rounded-xl cursor-pointer border border-t-4 border-t-red-500 hover:bg-red-500
+        className='w-full  mt-5 p-8 rounded-xl cursor-pointer border border-t-4 border-t-blue-500 hover:bg-blue-500
         hover:text-white hover:text-base transition duration-150
         ease-in-out shadow-md'
       >
         <span className='text-xl'>Loans</span>
         <div className='my-3'>
           <span className='text-3xl'>
-            <CreditScore className='mr-3' />₱{' '}
+            <CreditScore className='mr-3' />₹{' '}
             {new Intl.NumberFormat().format(total)}
           </span>
         </div>
-        <span className='text-base text-gray-500'>
+        <span className='text-xl'>
           Total Loans Transactions
         </span>
       </div>

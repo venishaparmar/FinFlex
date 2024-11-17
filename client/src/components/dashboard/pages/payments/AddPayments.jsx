@@ -94,7 +94,7 @@ const AddPayments = ({ loanId, balance, clientId }) => {
   };
 
   return (
-    <div className='flex mt-5 px-4 py-2 h-[530px] rounded border shadow-md border-t-4 border-t-red-500 '>
+    <div className='flex mt-5 px-4 py-2 h-[530px] rounded border shadow-md border-t-4 border-t-blue-500 '>
       <ToastContainer />
 
       {/* Add Loan */}
@@ -210,14 +210,14 @@ const AddPayments = ({ loanId, balance, clientId }) => {
           {/* BUTTONS */}
           <div>
             <button
-              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-auto ml-auto '
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-auto ml-auto '
               type='submit'
             >
               Add Payment
             </button>
             <button
               onClick={goBack}
-              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 ml-10'
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 ml-10'
             >
               Back
             </button>

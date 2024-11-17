@@ -55,7 +55,7 @@ const GetBorrowers = ({ setAuth }) => {
             </h3>
           </div>
           {/* INFO */}
-          <div className='w-full h-[650px] px-4 overflow-auto hover:overflow-scroll mt-5 border rounded shadow-md border-t-4 border-t-red-500 '>
+          <div className='w-full h-[650px] px-4 overflow-auto hover:overflow-scroll mt-5 border rounded shadow-md border-t-4 border-t-blue-500 '>
             <table className='table-fixed text-center'>
               <thead className=''>
                 <tr className=''>
@@ -71,10 +71,10 @@ const GetBorrowers = ({ setAuth }) => {
               </thead>
               <tbody>
                 {clients.length <= 0 ? (
-                  <tr className='border px-4 py-2 bg-red-50'>
+                  <tr className='border px-4 py-2 bg-blue-50'>
                     <td></td>
                     <td></td>
-                    <td className='px-4 py-2 bg-red-50'>No Client Data</td>
+                    <td className='px-4 py-2 bg-blue-50'>No Client Data</td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -97,13 +97,13 @@ const GetBorrowers = ({ setAuth }) => {
                         </td>
                         <td className='border px-4 py-2'>
                           <div className='flex'>
-                            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full mr-2 '>
+                            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full mr-2 '>
                               <Link to={`/Borrower/${client.id}`}>
                                 <VisibilityOutlined className='text-sm' />
                               </Link>
                             </button>
                             <button
-                              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '
+                              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '
                               onClick={() => selectClient(client.email)}
                             >
                               <Check />

@@ -11,7 +11,7 @@ export default function EmailPage({ setAuth }) {
 
       <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
         {/* HEADER */}
-        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
+        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
           {/* TITLE */}
           <div>
             <h3 className='text-lg font-medium leading-6 text-white'>

@@ -43,7 +43,7 @@ export default function DatesWidget() {
   return (
     <div className='w-full h-[450px]  '>
       {/* CLIENTS */}
-      <div className='mt-5 p-8 rounded-xl border border-t-4 border-t-red-500 cursor-pointer shadow-md'>
+      <div className='mt-5 p-8 rounded-xl border border-t-4 border-t-blue-500 cursor-pointer shadow-md'>
         <h3 className='text-xl mb-5 border-b-2'>Maturity Date</h3>
         <div className='flex justify-between items-center'>
           <div className='w-full h-[350px]  overflow-auto hover:overflow-scroll'>
@@ -67,12 +67,12 @@ export default function DatesWidget() {
                       <td className='widgetLgStatus'>{date.status}</td>
                     </tr>; */}
                 {dates.length <= 0 ? (
-                  <tr className='border px-4 py-2 bg-red-50'>
+                  <tr className='border px-4 py-2 bg-blue-50'>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td className='px-4 py-2 bg-red-50'>No Loan Data</td>
+                    <td className='px-4 py-2 bg-blue-50'>No Loan Data</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -90,13 +90,14 @@ export default function DatesWidget() {
                         <td className='border px-4 py-2  bg-gray-50'>
                           ₱ {date.balance}
                         </td>
-                        <td className='border px-4 py-2'>
-                          <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
-                            <Link to={`/emailClient`}>
-                              <MailOutline className='text-sm' />
-                            </Link>
-                          </button>
-                        </td>
+                        <td className='border px-2 py-2'>
+  <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full flex justify-center items-center'>
+    <Link to={`/emailClient`} className='flex justify-center items-center'>
+      <MailOutline className='text-lg' />
+    </Link>
+  </button>
+</td>
+
                       </tr>
                     );
                   })

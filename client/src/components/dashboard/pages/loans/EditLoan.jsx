@@ -176,7 +176,7 @@ const EditLoan = ({ setAuth }) => {
 
       <div className='w-full  h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
         {/* HEADER */}
-        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
+        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
           {/* TITLE */}
           <div>
             <h3 className='text-lg font-medium leading-6 text-white'>
@@ -205,7 +205,7 @@ const EditLoan = ({ setAuth }) => {
         <OneLoan />
 
         {/* EDIT FORM */}
-        <div className='mt-5 px-4 py-2 h-[530px] rounded border shadow-md border-t-4 border-t-red-500 '>
+        <div className='mt-5 px-4 py-2 h-[530px] rounded border shadow-md border-t-4 border-t-blue-500 '>
           <h3 className='text-lg font-medium leading-6 text-gray my-2 px-1 py-4 border-y-2 '>
             Edit Form
           </h3>
@@ -346,12 +346,12 @@ const EditLoan = ({ setAuth }) => {
             <div>
               <button
                 type='submit'
-                className=' text-center py-3 rounded bg-red-500 text-white hover:bg-red-700 focus:outline-none my-1 w-1/5'
+                className=' text-center py-3 rounded bg-blue-500 text-white hover:bg-blue-700 focus:outline-none my-1 w-1/5'
               >
                 Update
               </button>
               <Link
-                className=' ml-5 text-center py-3 rounded bg-red-500 text-white hover:bg-red-700 focus:outline-none my-1 w-1/5 inline-block'
+                className=' ml-5 text-center py-3 rounded bg-blue-500 text-white hover:bg-blue-700 focus:outline-none my-1 w-1/5 inline-block'
                 to={`/borrower/${clientId}`}
               >
                 Back

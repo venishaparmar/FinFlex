@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import image1 from './Revenue-pana1.png';
+import image2 from './Business deal-pana.png';
+import image3 from './Conversation-pana.png';
 // import { headerImg } from 'src/assets/debitcard.png';
 
 import {
@@ -18,8 +21,8 @@ const Landing = () => {
       <div className='sticky top-0 w-full bg-white'>
         <nav className='flex justify-between max-w-screen-xl px-4 py-5 mx-auto'>
           <div className='flex items-center'>
-            <h3 className='text-xl font-extrabold tracking-tight text-red-500 '>
-              Maogma<span className='text-gray-900'>.</span>
+            <h3 className='text-2xl font-extrabold tracking-tight text-blue-500 '>
+            FinFlex<span className='text-gray-900'>.</span>
             </h3>
           </div>
           <div>
@@ -28,7 +31,7 @@ const Landing = () => {
               <li>
                 <a
                   href='#'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-red-500 font-light lg:text-x '
+                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '
                 >
                   Home
                 </a>
@@ -38,7 +41,7 @@ const Landing = () => {
               <li>
                 <a
                   href='#about'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-red-500 font-light lg:text-x '
+                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '
                 >
                   About
                 </a>
@@ -47,7 +50,7 @@ const Landing = () => {
               <li>
                 <a
                   href='#pricing'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-red-500 font-light lg:text-x '
+                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-x '
                 >
                   Pricing
                 </a>
@@ -57,7 +60,7 @@ const Landing = () => {
               <li>
                 <a
                   href='#contacts'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-red-500 font-light lg:text-x '
+                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '
                 >
                   Contact
                 </a>
@@ -81,7 +84,7 @@ const Landing = () => {
 
             {/* BUTTONS */}
             <div class='space-y-4 sm:flex sm:space-y-0 sm:space-x-4'>
-              <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+              <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
                 <Link to='/register'>Get Started</Link>
               </button>
               <button className='border border-gray-200 rounded sm:w-auto hover:bg-gray-100 focus:ring-4 focus:ring-gray-100  font-bold py-2 px-4 focus:outline-none focus:shadow-outline mr-5'>
@@ -92,7 +95,7 @@ const Landing = () => {
 
           <div className='lg:mt-0 lg:col-span-5 lg:flex'>
             <img
-              src='https://img.freepik.com/free-vector/revenue-concept-illustration_114360-1556.jpg?w=826&t=st=1673963777~exp=1673964377~hmac=ca7b707ad30a71107b485b530a4bb4f9620b6b0fdb6abfa61b0a5b3cabc1930e'
+              src={image1}
               alt=''
             />
           </div>
@@ -116,9 +119,9 @@ const Landing = () => {
           {/* FEATURED ITEMS */}
           <div className='flex gap-10 justify-between'>
             {/* FEATURE 1 : LOAN MGT */}
-            <div className='flex flex-col w-80 p-10  border rounded-xl hover:shadow-xl hover:bg-red-500 hover:text-white cursor-pointer'>
+            <div className='flex flex-col w-80 p-10  border rounded-xl hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer'>
               <div className=''>
-                <CreditScore className=' w-full text-red-500 rounded-full h-full text-2xl mb-2' />
+                <CreditScore className=' w-full text-blue-500 rounded-full h-full text-2xl mb-2' />
               </div>
               <h4 className='text-md font-semibold mb-1'>Loan Management</h4>
               <p>
@@ -128,9 +131,9 @@ const Landing = () => {
             </div>
 
             {/* FEATURE 2 : CLIENT MGT */}
-            <div className='flex flex-col w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-red-500 hover:text-white cursor-pointer'>
+            <div className='flex flex-col w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer'>
               <div className=''>
-                <PermIdentity className=' w-full text-red-500 rounded-full h-full text-2xl mb-2' />
+                <PermIdentity className=' w-full text-blue-500 rounded-full h-full text-2xl mb-2' />
               </div>
               <h4 className='text-md font-semibold mb-1'>Client Management</h4>
               <p>
@@ -140,9 +143,9 @@ const Landing = () => {
             </div>
 
             {/* FEATURE 3 : PAYMENT MGT */}
-            <div className='flex flex-col w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-red-500 hover:text-white cursor-pointer '>
+            <div className='flex flex-col w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer '>
               <div className=''>
-                <ReceiptLong className=' w-full text-red-500 rounded-full h-full text-2xl mb-2 ' />
+                <ReceiptLong className=' w-full text-blue-500 rounded-full h-full text-2xl mb-2 ' />
               </div>
               <h4 className='text-md font-semibold mb-1'>
                 Payments Management
@@ -157,14 +160,14 @@ const Landing = () => {
       </section>
 
       {/* BANNER SECTION */}
-      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6 bg-red-500 rounded-xl flex'>
+      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6 bg-blue-500 rounded-xl flex'>
         {/* TEXT */}
         <div className='text-gray-500 sm:text-lg text-center mx-auto'>
           {/* TITLE */}
           <h2 className='mb-5 text-3xl font-bold tracking-tight text-white'>
             We will never leave your side, <br /> but will leave you a smile.{' '}
           </h2>
-          <button className='bg-gray-800 hover:bg-red-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+          <button className='bg-gray-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
             <Link to='/register'>Get Started</Link>
           </button>
         </div>
@@ -179,7 +182,7 @@ const Landing = () => {
             <div className='text-gray-500 sm:text-lg'>
               {/* TITLE */}
               <h2 className='mb-4 text-3xl font-extrabold tracking-tight text-gray-900'>
-                With Maogma, see how loans are released and Succeed.
+                With FinFlex, see how loans are released and Succeed.
               </h2>
 
               {/* DESCRIPTION 1 */}
@@ -195,7 +198,7 @@ const Landing = () => {
               >
                 <li class='flex space-x-3'>
                   <svg
-                    class='flex-shrink-0 w-5 h-5 text-red-500 e-400'
+                    class='flex-shrink-0 w-5 h-5 text-blue-500 e-400'
                     fill='currentColor'
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
@@ -212,7 +215,7 @@ const Landing = () => {
                 </li>
                 <li class='flex space-x-3'>
                   <svg
-                    class='flex-shrink-0 w-5 h-5 text-red-500 e-400'
+                    class='flex-shrink-0 w-5 h-5 text-blue-500 e-400'
                     fill='currentColor'
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
@@ -229,7 +232,7 @@ const Landing = () => {
                 </li>
                 <li class='flex space-x-3'>
                   <svg
-                    class='flex-shrink-0 w-5 h-5 text-red-500 e-400'
+                    class='flex-shrink-0 w-5 h-5 text-blue-500 e-400'
                     fill='currentColor'
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
@@ -257,7 +260,7 @@ const Landing = () => {
             {/* IMAGE */}
             <div>
               <img
-                src='https://i.pinimg.com/564x/bd/4f/32/bd4f32d8958199060ad5e4c04e892bce.jpg'
+                src={image2}
                 alt=''
               />
             </div>
@@ -267,7 +270,7 @@ const Landing = () => {
           <div class='items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16'>
             {/* IMAGE */}
             <img
-              src='https://i.pinimg.com/564x/6f/e0/8f/6fe08f134f55d89ec81c0716c10c7ccf.jpg'
+              src={image3}
               alt=''
             />
 
@@ -292,7 +295,7 @@ const Landing = () => {
               >
                 <li class='flex space-x-3'>
                   <svg
-                    class='flex-shrink-0 w-5 h-5 text-red-500 '
+                    class='flex-shrink-0 w-5 h-5 text-blue-500 '
                     fill='currentColor'
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
@@ -309,7 +312,7 @@ const Landing = () => {
                 </li>
                 <li class='flex space-x-3'>
                   <svg
-                    class='flex-shrink-0 w-5 h-5 text-red-500 '
+                    class='flex-shrink-0 w-5 h-5 text-blue-500 '
                     fill='currentColor'
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
@@ -326,7 +329,7 @@ const Landing = () => {
                 </li>
                 <li class='flex space-x-3'>
                   <svg
-                    class='flex-shrink-0 w-5 h-5 text-red-500 '
+                    class='flex-shrink-0 w-5 h-5 text-blue-500 '
                     fill='currentColor'
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
@@ -362,7 +365,7 @@ const Landing = () => {
               Designed for business teams like yours
             </h2>
             <p class='mb-5 font-light text-gray-500 sm:text-xl '>
-              Here at Maogma we focus on markets where technology, financing,
+              Here at FinFlex we focus on markets where technology, financing,
               and capital can unlock long-term value and drive economic growth.
             </p>
           </div>
@@ -446,7 +449,7 @@ const Landing = () => {
               </ul>
               <a
                 href='#'
-                class='text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-red-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
+                class='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
               >
                 Get started
               </a>
@@ -530,7 +533,7 @@ const Landing = () => {
               </ul>
               <a
                 href='#'
-                class='text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-red-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
+                class='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
               >
                 Get started
               </a>
@@ -614,7 +617,7 @@ const Landing = () => {
               </ul>
               <a
                 href='#'
-                class='text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:ring-red-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
+                class='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
               >
                 Get started
               </a>
@@ -624,7 +627,7 @@ const Landing = () => {
       </section> */}
 
       {/* BANNER 2 */}
-      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6 bg-red-500 rounded-xl flex'>
+      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6 bg-blue-500 rounded-xl flex'>
         {/* TEXT */}
         <div className=' sm:text-lg text-center mx-auto'>
           {/* TITLE */}
@@ -632,9 +635,9 @@ const Landing = () => {
             Start your free trial today
           </h2>
           <p class='mb-6 font-light text-white md:text-lg'>
-            Try Maogma Platform for 30 days. No credit card required.
+            Try FinFlex Platform for 30 days. No credit card required.
           </p>
-          <button className='bg-gray-800 hover:bg-red-900 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+          <button className='bg-gray-800 hover:bg-blue-900 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
             <Link to='/register'>Free Trial for 30 days</Link>
           </button>
         </div>
@@ -662,7 +665,7 @@ const Landing = () => {
                 type='email'
                 id='email'
                 class='shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5'
-                placeholder='maogma@gmail.com'
+                placeholder='FinFlex@gmail.com'
                 required
               />
             </div>
@@ -695,7 +698,7 @@ const Landing = () => {
                 placeholder='Leave a comment...'
               ></textarea>
             </div>
-            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
               Send
             </button>
           </form>
@@ -712,14 +715,14 @@ const Landing = () => {
               class='flex items-center justify-center mb-5 text-2xl font-semibold text-gray-900 '
             >
               <img src='' class='h-6 mr-3 sm:h-9' alt='' />
-              Maogma.
+              FinFlex.
             </a>
             <span class='block text-sm text-center text-gray-500 '>
-              © 2022-2023 Maogma™. All Rights Reserved.
+              © 2022-2023 FinFlex™. All Rights Reserved.
             </span>
             <ul class='flex justify-center mt-5 space-x-5'>
               <li>
-                <a href='#' class='text-gray-500 hover:text-red-500 '>
+                <a href='#' class='text-gray-500 hover:text-blue-500 '>
                   <svg
                     class='w-5 h-5'
                     fill='currentColor'
@@ -735,7 +738,7 @@ const Landing = () => {
                 </a>
               </li>
               <li>
-                <a href='#' class='text-gray-500 hover:text-red-500  '>
+                <a href='#' class='text-gray-500 hover:text-blue-500  '>
                   <svg
                     class='w-5 h-5'
                     fill='currentColor'
@@ -751,7 +754,7 @@ const Landing = () => {
                 </a>
               </li>
               <li>
-                <a href='#' class='text-gray-500 hover:text-red-500  '>
+                <a href='#' class='text-gray-500 hover:text-blue-500  '>
                   <svg
                     class='w-5 h-5'
                     fill='currentColor'
@@ -763,7 +766,7 @@ const Landing = () => {
                 </a>
               </li>
               <li>
-                <a href='#' class='text-gray-500 hover:text-red-500  '>
+                <a href='#' class='text-gray-500 hover:text-blue-500  '>
                   <svg
                     class='w-5 h-5'
                     fill='currentColor'

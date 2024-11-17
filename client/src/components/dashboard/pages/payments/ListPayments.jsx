@@ -68,7 +68,7 @@ const PaymentsInfo = () => {
   }, []);
 
   return (
-    <div className='h-[350px] overflow-hidden hover:overflow-scroll border rounded shadow-md px-8 py-8 border-t-4 border-t-red-500'>
+    <div className='h-[350px] overflow-hidden hover:overflow-scroll border rounded shadow-md px-8 py-8 border-t-4 border-t-blue-500'>
       <ToastContainer />
 
       {/* Payment History */}
@@ -91,11 +91,11 @@ const PaymentsInfo = () => {
         </thead>
         <tbody>
           {payments.length <= 0 ? (
-            <tr className='border px-4 py-2 bg-red-50'>
+            <tr className='border px-4 py-2 bg-blue-50'>
               <td></td>
               <td></td>
               <td></td>
-              <td className='px-4 py-2 bg-red-50'>No Payment Data</td>
+              <td className='px-4 py-2 bg-blue-50'>No Payment Data</td>
               <td></td>
               <td></td>
               <td></td>
@@ -107,11 +107,11 @@ const PaymentsInfo = () => {
                   <td className='border px-4 py-2 bg-gray-50'>
                     {payment.loan_id}
                   </td>
-                  <td className='border px-4 py-2 '>₱ {payment.amount}</td>
+                  <td className='border px-4 py-2 '>₹ {payment.amount}</td>
                   <td className='border px-4 py-2 bg-gray-50'>
                     {new Date(payment.collection_date).toDateString()}
                   </td>
-                  <td className='border px-4 py-2'>₱ {payment.new_balance}</td>
+                  <td className='border px-4 py-2'>₹ {payment.new_balance}</td>
                   <td className='border px-4 py-2 bg-gray-50'>
                     {payment.collected_by}
                   </td>
@@ -137,7 +137,7 @@ const PaymentsInfo = () => {
                   <td className='border px-4 py-2 '>
                     {' '}
                     <button
-                      className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline  text-sm'
+                      className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline  text-sm'
                       onClick={() => deletePayment(payment.id)}
                     >
                       <DeleteForever className='text-lg' />

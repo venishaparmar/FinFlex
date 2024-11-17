@@ -36,7 +36,7 @@ const OneLoan = () => {
   return (
     <div>
       {/* Loans Information */}
-      <div className='mt-5 px-4 py-2 h-[180px] rounded border shadow-md border-t-4 border-t-red-500 '>
+      <div className='mt-5 px-4 py-2 h-[180px] rounded border shadow-md border-t-4 border-t-blue-500 overflow-auto hover:overflow-scroll'>
         {/* Active Loans */}
         <div>
           <div className='flex items-center justify-between border-y-2 '>
@@ -61,12 +61,12 @@ const OneLoan = () => {
             </thead>
             <tbody>
               {loans.length <= 0 ? (
-                <tr className='border px-4 py-2 bg-red-50'>
+                <tr className='border px-4 py-2 bg-blue-50'>
                   <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className='px-4 py-2 bg-red-50'>No Loan Data</td>
+                  <td className='px-4 py-2 bg-blue-50'>No Loan Data</td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -76,11 +76,11 @@ const OneLoan = () => {
                   <td className='border px-4 py-2 bg-gray-50'>{loans.id}</td>
                   <td className='border px-4 py-2'>{loans.type}</td>
                   <td className='border px-4 py-2 bg-gray-50'>
-                    ₱ {loans.balance}
+                    ₹ {loans.balance}
                   </td>
-                  <td className='border px-4 py-2 '>₱ {loans.gross_loan}</td>
+                  <td className='border px-4 py-2 '>₹ {loans.gross_loan}</td>
                   <td className='border px-4 py-2 bg-gray-50'>
-                    ₱ {loans.amort}
+                    ₹ {loans.amort}
                   </td>
                   <td className='border px-4 py-2 '>{loans.terms} month/s</td>
                   <td className='border px-4 py-2 bg-gray-50'>
@@ -93,7 +93,7 @@ const OneLoan = () => {
                         {loans.status}
                       </span>
                     ) : loans.status === 'Declined' ? (
-                      <span className=' bg-red-400 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-blue-400 text-white px-4 py-1 rounded-md'>
                         {loans.status}
                       </span>
                     ) : loans.status === 'Pending' ? (

@@ -67,7 +67,7 @@ export default function Message({ email }) {
   return (
     <div className='flex'>
       <ToastContainer />
-      <div className='w-full h-[650px] px-4 mt-5 border rounded shadow-md border-t-4 border-t-red-500 '>
+      <div className='w-full h-[650px] px-4 mt-5 border rounded shadow-md border-t-4 border-t-blue-500 '>
         <div class='w-full px-8  bg-white '>
           <div class=' py-2.5 '>
             <form onSubmit={sendEmail} class='space-y-8'>
@@ -144,7 +144,7 @@ export default function Message({ email }) {
               </div>
               <button
                 type='submit'
-                class='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline '
+                class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline '
               >
                 Send message
               </button>

@@ -96,7 +96,7 @@ const AddLoan = ({ setAuth }) => {
       {/* Add Loan */}
       <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
         {/* TITLE */}
-        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
+        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
           <div>
             <h3 className='text-lg font-medium leading-6 text-white'>
               Add Loan for Client #{clientId}
@@ -124,7 +124,7 @@ const AddLoan = ({ setAuth }) => {
 
         {/* FORM */}
         <form
-          className='grid grid-cols-2 mt-5 p-8 h-[650px] rounded border shadow-md border-t-4 border-t-red-500 '
+          className='grid grid-cols-2 mt-5 p-8 h-[650px] rounded border shadow-md border-t-4 border-t-blue-500 '
           onSubmit={onSubmit}
         >
           {/* TYPE */}
@@ -247,12 +247,12 @@ const AddLoan = ({ setAuth }) => {
           {/* BUTTONS */}
           <div>
             <button
-              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-auto ml-auto '
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-auto ml-auto '
               type='submit'
             >
               Add New Loan
             </button>
-            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 ml-10'>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 ml-10'>
               <Link to={`/borrower/${clientId}`}>Cancel</Link>
             </button>
           </div>

@@ -31,7 +31,7 @@ export default function ClientsWidget() {
     <div className='w-full'>
       {/* CLIENTS */}
       <div
-        className='mt-5 p-8 rounded-xl border border-t-4 border-t-red-500 cursor-pointer hover:bg-red-500
+        className='mt-5 p-8 rounded-xl border border-t-4 border-t-blue-500 cursor-pointer hover:bg-blue-500
         hover:text-white hover:text-base transition duration-150
         ease-in-out shadow-md'
       >
@@ -43,7 +43,7 @@ export default function ClientsWidget() {
             <PermIdentity fontSize='30px' /> {clients.length}
           </span>
         </div>
-        <span className='text-base text-gray-500'>Total Clients Serviced</span>
+        <span className='text-xl'>Total Clients Serviced</span>
       </div>
     </div>
   );

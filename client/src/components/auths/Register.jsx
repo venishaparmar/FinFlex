@@ -63,14 +63,14 @@ const Register = ({ setAuth }) => {
     }
   };
   return (
-    <div className='flex flex-col h-[750px] w-[620px] border rounded-md shadow-md  mx-auto my-20 justify-center flex-wrap border-t-4 border-t-red-500 '>
+    <div className='flex flex-col h-[750px] w-[620px] border rounded-md shadow-md  mx-auto my-20 justify-center flex-wrap border-t-4 border-t-blue-500 '>
       {/* FORM */}
       <div className=''>
         <div className='flex justify-between items-center  px-8 py-8'>
           {/* GREETINGS */}
           <div className='mt-5'>
             <h1 className='text-xl font-semibold '>
-              Welcome to <span className='text-red-500'>Maogma</span>.
+              Welcome to <span className='text-blue-500'>Maogma</span>.
             </h1>
             <small className='text-gray-400'>Please enter your details</small>
           </div>
@@ -230,7 +230,7 @@ const Register = ({ setAuth }) => {
           </div>
           <button
             type='submit'
-            className='w-full text-center py-3 rounded bg-red-500 text-white hover:bg-red-700 focus:outline-none my-1'
+            className='w-full text-center py-3 rounded bg-blue-500 text-white hover:bg-blue-700 focus:outline-none my-1'
           >
             Create Account
           </button>
@@ -241,7 +241,7 @@ const Register = ({ setAuth }) => {
             </span>
             <a
               href='http://localhost:3000/login'
-              className='text-xs font-semibold text-red-700'
+              className='text-xs font-semibold text-blue-700'
             >
               Sign in
             </a>

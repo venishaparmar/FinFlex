@@ -71,7 +71,7 @@ const Loans = ({ setAuth }) => {
         {/* Loans Information */}
         <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
           {/* HEADER */}
-          <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
+          <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
             {/* TITLE */}
             <div>
               <h3 className='text-lg font-medium leading-6 text-white'>
@@ -103,13 +103,13 @@ const Loans = ({ setAuth }) => {
             <h3 className='text-lg font-medium leading-6 text-gray my-2  px-1 py-2 '>
               Loan Transactions
             </h3>
-            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-auto mt-2'>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-auto mt-2'>
               <Link to='/addLoan'>Add Loan</Link>
             </button>
           </div>
 
           {/* ALL LOANS */}
-          <div className='w-full h-[650px] px-4 overflow-auto hover:overflow-scroll mt-5 border rounded shadow-md border-t-4 border-t-red-500 '>
+          <div className='w-full h-[650px] px-4 overflow-auto hover:overflow-scroll mt-5 border rounded shadow-md border-t-4 border-t-blue-500 '>
             <table className='table-fixed text-center  '>
               <thead>
                 <tr>
@@ -133,12 +133,12 @@ const Loans = ({ setAuth }) => {
               </thead>
               <tbody>
                 {loans.length <= 0 ? (
-                  <tr className='border px-4 py-2 bg-red-50'>
+                  <tr className='border px-4 py-2 bg-blue-50'>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td className='px-4 py-2 bg-red-50'>No Loan Data</td>
+                    <td className='px-4 py-2 bg-blue-50'>No Loan Data</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -156,11 +156,11 @@ const Loans = ({ setAuth }) => {
                         <td className='border px-4 py-2  bg-gray-50'>
                           {loan.type}
                         </td>
-                        <td className='border px-4 py-2 '>₱ {loan.balance}</td>
+                        <td className='border px-4 py-2 '>₹ {loan.balance}</td>
                         <td className='border px-4 py-2  bg-gray-50'>
-                          ₱ {loan.gross_loan}
+                          ₹ {loan.gross_loan}
                         </td>
-                        <td className='border px-4 py-2 '>₱ {loan.amort}</td>
+                        <td className='border px-4 py-2 '>₹ {loan.amort}</td>
                         <td className='border px-4 py-2  bg-gray-50'>
                           {loan.terms} month/s
                         </td>
@@ -178,7 +178,7 @@ const Loans = ({ setAuth }) => {
                               {loan.status}
                             </span>
                           ) : loan.status === 'Declined' ? (
-                            <span className=' bg-red-400 text-white px-4 py-1 rounded-md'>
+                            <span className=' bg-blue-400 text-white px-4 py-1 rounded-md'>
                               {loan.status}
                             </span>
                           ) : (
@@ -189,12 +189,12 @@ const Loans = ({ setAuth }) => {
                         </td>
                         <td className='border px-4 py-2'>
                           <button
-                            className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
+                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
                             onClick={() => deleteLoan(loan.id)}
                           >
                             <DeleteForever className='text-lg' />
                           </button>
-                          <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
+                          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
                             <Link to={`/editLoan/${loan.id}`}>
                               <Edit className='text-sm' />
                             </Link>

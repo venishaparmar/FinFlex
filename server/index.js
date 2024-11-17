@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { connection as pool } from './db.js';
+import { connection as pool } from './db.js'; // Ensure this imports `connection` from `db.js`
 import { generateJWT } from './utils/jwtGenerator.js';
 import { auth } from './middlewares/auth.js';
 import cors from 'cors';
@@ -11,12 +11,10 @@ app.use(cors());
 const PORT = 8000;
 
 // Helper function for MySQL query with Promise support
-const query = (sql, params) => new Promise((resolve, reject) => {
-  pool.query(sql, params, (err, results) => {
-    if (err) return reject(err);
-    resolve(results);
-  });
-});
+const query = async (sql, params) => {
+  const [results] = await pool.query(sql, params); // Use `pool.query` correctly
+  return results;
+};
 
 // Login Route
 app.post('/login', async (req, res) => {
@@ -28,7 +26,7 @@ app.post('/login', async (req, res) => {
       return res.status(401).send('Username or password is wrong');
     }
 
-    // Directly compare passwords (in plain text)
+    // Directly compare passwords (no bcrypt)
     if (password !== admin[0].password) {
       return res.status(401).send('Username or password is wrong');
     }
@@ -36,7 +34,7 @@ app.post('/login', async (req, res) => {
     const token = generateJWT(admin[0]);
     res.json({ token });
   } catch (error) {
-    console.error(error);
+    console.error('Login error:', error);
     res.status(500).send('Server error');
   }
 });
@@ -51,7 +49,6 @@ app.post('/addAdmin', async (req, res) => {
       return res.status(401).send('User already exists');
     }
 
-    // Insert plain text password (not secure)
     const result = await query(
       `INSERT INTO admin (firstname, lastname, contactnumber, address, email, password, username) VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [firstname, lastname, contactNumber, address, email, password, username]
@@ -61,7 +58,7 @@ app.post('/addAdmin', async (req, res) => {
     const token = generateJWT(newAdmin[0]);
     res.json({ token });
   } catch (error) {
-    console.error(error);
+    console.error('Add Admin error:', error);
     res.status(500).send('Server error');
   }
 });
@@ -72,7 +69,7 @@ app.get('/allAdmins', auth, async (req, res) => {
     const admins = await query(`SELECT * FROM admin`);
     res.json(admins);
   } catch (error) {
-    console.error(error.message);
+    console.error('Get all admins error:', error);
     res.status(500).send('Server error');
   }
 });
@@ -81,16 +78,66 @@ app.get('/profile', auth, async (req, res) => {
   try {
     res.json(req.user);
   } catch (error) {
-    console.log(err);
+    console.log('Profile error:', error);
+    res.status(500).send('Server error');
   }
 });
 
+//* CLIENTS
+app.get('/allClients', auth, async (req, res) => {
+  try {
+    const getClient = await query(`SELECT * FROM clients`);
+
+    res.json(getClient);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching clients');
+  }
+});
+
+app.get('/client/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const getClient = await query(
+      `SELECT * FROM clients WHERE id = ?`, [id]
+    );
+
+    if (getClient.length > 0) {
+      res.json(getClient[0]);
+    } else {
+      res.status(404).send('Client not found');
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching client');
+  }
+});
+
+// Client Email
+app.get('/email/:email', auth, async (req, res) => {
+  try {
+    const email = req.params['email'];
+    const getClient = await query(
+      `SELECT * FROM clients WHERE email = ?`, [email]
+    );
+
+    if (getClient.length > 0) {
+      res.json(getClient[0]);
+    } else {
+      res.status(404).send('Client not found');
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching client by email');
+  }
+});
+
+// New Client
 app.post('/addClient', async (req, res) => {
   try {
     const { firstname, lastname, contactNumber, address, email, username } = req.body;
 
-    // Use parameterized queries to avoid SQL injection risks
-    const [user] = await pool.query(
+    const user = await query(
       `SELECT * FROM clients WHERE username = ?`, [username]
     );
 
@@ -98,19 +145,440 @@ app.post('/addClient', async (req, res) => {
       return res.status(401).send('User already exists');
     }
 
-    // Insert new client using parameterized query
-    const [newClient] = await pool.query(
-      `INSERT INTO clients (firstname, lastname, contactnumber, address, email, username) 
-      VALUES (?, ?, ?, ?, ?, ?)`,
+    const newClient = await query(
+      `INSERT INTO clients(firstname, lastname, contactnumber, address, email, username) 
+       VALUES (?, ?, ?, ?, ?, ?)`, 
       [firstname, lastname, contactNumber, address, email, username]
     );
 
     res.json(newClient);
   } catch (error) {
-    console.log(error);
-    res.status(500).send('Server error');
+    console.log(error.message);
+    res.status(500).send('Error adding new client');
   }
 });
+
+app.patch('/clients/:id', async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const { firstname, lastname, contactNumber, email, address } = req.body;
+
+    const updateClient = await query(
+      `UPDATE clients SET firstname = ?, lastname = ?, contactNumber = ?, address = ?, email = ? 
+       WHERE id = ?`, 
+      [firstname, lastname, contactNumber, address, email, id]
+    );
+
+    if (updateClient.affectedRows > 0) {
+      res.json(updateClient);
+    } else {
+      res.status(404).send('Client not found');
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error updating client');
+  }
+});
+
+app.delete('/clients/:id', async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const deleteClient = await query(
+      `DELETE FROM clients WHERE id = ?`, [id]
+    );
+
+    if (deleteClient.affectedRows > 0) {
+      res.json({ msg: `Deleted client with an id of ${id}` });
+    } else {
+      res.status(404).send('Client not found');
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error deleting client');
+  }
+});
+
+//* LOANS
+
+// Get all loans
+app.get('/allLoans', auth, async (req, res) => {
+  try {
+    const getLoans = await query(
+      `SELECT c.firstname, c.lastname, l.id, l.type, l.gross_loan, l.amort, l.terms, l.date_released, l.maturity_date, l.balance, l.status 
+      FROM loans AS l 
+      INNER JOIN clients AS c ON l.client_id = c.id`
+    );
+
+    res.json(getLoans);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching loans');
+  }
+});
+
+// Get loans of one client
+app.get('/loans/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const getClientLoans = await query(
+      `SELECT c.firstname, c.id, l.id, l.type, l.gross_loan, l.amort, l.terms, l.date_released, l.maturity_date, l.balance, l.status, l.client_id 
+      FROM loans AS l 
+      INNER JOIN clients AS c ON l.client_id = c.id WHERE c.id = ?`,
+      [id]
+    );
+
+    res.json(getClientLoans);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching loans for this client');
+  }
+});
+
+// Get loan
+app.get('/loan/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const getLoan = await query(
+      `SELECT c.firstname, c.lastname, l.id, l.client_id, l.type, l.gross_loan, l.amort, l.terms, l.date_released, l.maturity_date, l.balance, l.status 
+      FROM loans AS l 
+      INNER JOIN clients AS c ON l.client_id = c.id WHERE l.id = ?`,
+      [id]
+    );
+
+    if (getLoan.length > 0) {
+      res.json(getLoan[0]);
+    } else {
+      res.status(404).send('Loan not found');
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching loan');
+  }
+});
+
+// Get loan's maturity date
+app.get('/dates', auth, async (req, res) => {
+  try {
+    const getLoanDates = await query(
+      `SELECT maturity_date FROM loans`
+    );
+
+    res.json(getLoanDates);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching loan dates');
+  }
+});
+
+// Create loan for borrower page
+app.post('/loans/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const { type, gross_loan, balance, amort, terms, date_released, maturity_date } = req.body;
+
+    const newLoan = await query(
+      `INSERT INTO loans(client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date) 
+      VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?)`,
+      [id, type, balance, gross_loan, amort, terms, date_released, maturity_date]
+    );
+
+    res.json(newLoan);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error creating loan');
+  }
+});
+
+// Create loan for loans page
+app.post('/loans/', auth, async (req, res) => {
+  try {
+    const { client_id, type, status, gross_loan, balance, amort, terms, date_released, maturity_date } = req.body;
+
+    const newLoan = await query(
+      `INSERT INTO loans(client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date]
+    );
+
+    res.json(newLoan);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error creating loan');
+  }
+});
+
+// Update loan
+app.patch('/loans/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { type, balance, gross_loan, amort, terms, date_released, maturity_date, status } = req.body;
+
+    const updateLoan = await query(
+      `UPDATE loans 
+      SET type = ?, balance = ?, gross_loan = ?, amort = ?, terms = ?, date_released = ?, maturity_date = ?, status = ? 
+      WHERE id = ?`,
+      [type, balance, gross_loan, amort, terms, date_released, maturity_date, status, id]
+    );
+
+    res.json(updateLoan);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error updating loan');
+  }
+});
+
+// UPDATE LOAN PAYMENT
+app.patch('/loan/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updateLoanPayment = await query(
+      `UPDATE loans 
+      SET balance = (SELECT new_balance FROM payments WHERE payments.loan_id = ?)
+      WHERE id = ?`,
+      [id, id]
+    );
+
+    res.json(updateLoanPayment);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error updating loan payment');
+  }
+});
+
+// Delete payment
+app.delete('/payment/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletePayment = await query(
+      `DELETE FROM payments WHERE id = ?`,
+      [id]
+    );
+
+    if (deletePayment.affectedRows === 0) {
+      res.json('You are not authorized to delete this payment');
+    } else {
+      res.json({ msg: `Deleted payment with an id of ${id}` });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error deleting payment');
+  }
+});
+
+// Delete loan
+app.delete('/loans/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deleteLoan = await query(
+      `DELETE FROM loans WHERE id = ?`,
+      [id]
+    );
+
+    if (deleteLoan.affectedRows === 0) {
+      res.json('You are not authorized to delete this loan');
+    } else {
+      res.json({ msg: `Deleted loan with an id of ${id}` });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error deleting loan');
+  }
+});
+
+//* LOANS
+
+// Get all loans
+app.get('/allLoans', auth, async (req, res) => {
+  try {
+    const getLoans = await query(
+      `SELECT c.firstname, c.lastname, l.id, l.type, l.gross_loan, l.amort, l.terms, l.date_released, l.maturity_date, l.balance, l.status 
+      FROM loans AS l 
+      INNER JOIN clients AS c ON l.client_id = c.id 
+      WHERE c.id = l.client_id`
+    );
+
+    res.json(getLoans);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching loans');
+  }
+});
+
+// Get loans of one client
+app.get('/loans/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+
+    const getLoans = await query(
+      `SELECT c.firstname, c.id, l.id, l.type, l.gross_loan, l.amort, l.terms, l.date_released, l.maturity_date, l.balance, l.status, l.client_id 
+      FROM loans AS l 
+      INNER JOIN clients AS c ON l.client_id = c.id 
+      WHERE c.id = ?`, [id]
+    );
+
+    res.json(getLoans);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching client loans');
+  }
+});
+
+// Get loan
+app.get('/loan/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+
+    const getLoan = await query(
+      `SELECT c.firstname, c.lastname, l.id, l.client_id, l.type, l.gross_loan, l.amort, l.terms, l.date_released, l.maturity_date, l.balance, l.status 
+      FROM loans AS l 
+      INNER JOIN clients AS c ON l.client_id = c.id 
+      WHERE l.id = ?`, [id]
+    );
+
+    res.json(getLoan[0]);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching loan');
+  }
+});
+
+// Get loan's maturity date
+app.get('/dates', auth, async (req, res) => {
+  try {
+    const getLoans = await query(
+      `SELECT maturity_date FROM loans`
+    );
+
+    res.json(getLoans);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching loan dates');
+  }
+});
+
+// Create loan for borrower page
+app.post('/loans/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const {
+      type,
+      gross_loan,
+      balance,
+      amort,
+      terms,
+      date_released,
+      maturity_date,
+    } = req.body;
+
+    const newLoan = await query(
+      `INSERT INTO loans (client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date) 
+      VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?)`, 
+      [id, type, balance, gross_loan, amort, terms, date_released, maturity_date]
+    );
+
+    res.json(newLoan);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error creating loan');
+  }
+});
+
+// Create loan for loans page
+app.post('/loans/', auth, async (req, res) => {
+  try {
+    const {
+      client_id,
+      type,
+      status,
+      gross_loan,
+      balance,
+      amort,
+      terms,
+      date_released,
+      maturity_date,
+    } = req.body;
+
+    const newLoan = await query(
+      `INSERT INTO loans (client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+      [client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date]
+    );
+
+    res.json(newLoan);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error creating loan');
+  }
+});
+
+// Update loan
+app.patch('/loans/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+    const {
+      type,
+      balance,
+      gross_loan,
+      amort,
+      terms,
+      date_released,
+      maturity_date,
+      status,
+    } = req.body;
+
+    const updateLoan = await query(
+      `UPDATE loans SET type = ?, balance = ?, gross_loan = ?, amort = ?, terms = ?, date_released = ?, maturity_date = ?, status = ? 
+      WHERE id = ?`, 
+      [type, balance, gross_loan, amort, terms, date_released, maturity_date, status, id]
+    );
+
+    res.json(updateLoan);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error updating loan');
+  }
+});
+
+// Update loan payment
+app.patch('/loan/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+
+    const updateLoan = await query(
+      `UPDATE loans SET balance = payments.new_balance 
+      FROM payments WHERE payments.loan_id = ?`, 
+      [id]
+    );
+
+    res.json(updateLoan);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error updating loan payment');
+  }
+});
+
+// Delete loan
+app.delete('/loans/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+
+    const deleteLoan = await query(
+      `DELETE FROM loans WHERE id = ?`, [id]
+    );
+
+    res.json({ msg: `Deleted loan with an id of ${id}` });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error deleting loan');
+  }
+});
+
+
+
+
 
 
 app.listen(PORT, () => {
