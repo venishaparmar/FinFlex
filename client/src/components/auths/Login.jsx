@@ -66,7 +66,7 @@ const Login = ({ setAuth }) => {
   };
 
   return (
-    <div className='flex flex-col h-auto w-[620px] border rounded-md shadow-md  mx-auto my-52 justify-center flex-wrap border-t-4 border-t-red-500 '>
+    <div className='flex flex-col h-auto w-[620px] border rounded-md shadow-md  mx-auto my-52 justify-center flex-wrap border-t-4 border-t-blue-500 '>
       <ToastContainer />
       <div className=''>
         <div className='flex justify-between items-center px-8 pt-6 pb-2'>
@@ -126,7 +126,7 @@ const Login = ({ setAuth }) => {
           </div>
           <div className='flex flex-col items-center justify-between gap-5'>
             <button
-              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full'
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full'
               type='submit'
             >
               Sign In
