@@ -70,7 +70,7 @@ const Borrowers = ({ setAuth }) => {
       {/* Clients */}
       <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
         {/* HEADER */}
-        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
+        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
           <div>
             <h3 className='text-lg font-medium leading-6 text-white'>
               Borrowers
@@ -101,13 +101,13 @@ const Borrowers = ({ setAuth }) => {
           <h3 className='text-lg font-medium leading-6 text-gray my-2  px-1 py-2 '>
             Borrowers' List
           </h3>
-          <button className='border hover:bg-red-700 bg-red-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-auto mt-2 mr-5'>
+          <button className='border hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-auto mt-2 mr-5'>
             <Link to='/addBorrower'>Add Borrower</Link>
           </button>
         </div>
 
         {/* INFO */}
-        <div className='w-full h-[640px] px-4   mt-5 overflow-auto hover:overflow-scroll border rounded shadow-md border-t-4 border-t-red-500 '>
+        <div className='w-full h-[640px] px-4   mt-5 overflow-auto hover:overflow-scroll border rounded shadow-md border-t-4 border-t-blue-500 '>
           <table className='table-fixed text-center mb-2'>
             <thead className=' mt-5'>
               <tr className=' mt-10'>
@@ -123,10 +123,10 @@ const Borrowers = ({ setAuth }) => {
             </thead>
             <tbody>
               {clients.length <= 0 ? (
-                <tr className='border px-4 py-2 bg-red-50'>
+                <tr className='border px-4 py-2 bg-blue-50'>
                   <td></td>
                   <td></td>
-                  <td className='px-4 py-2 bg-red-50'>No Client Data</td>
+                  <td className='px-4 py-2 bg-blue-50'>No Client Data</td>
                   <td></td>
                   <td></td>
                 </tr>
@@ -149,12 +149,12 @@ const Borrowers = ({ setAuth }) => {
                       </td>
                       <td className='border px-4 py-2'>
                         <button
-                          className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
+                          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
                           onClick={() => deleteClient(client.id)}
                         >
                           <DeleteForever className='text-lg' />
                         </button>
-                        <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
+                        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
                           <Link to={`/Borrower/${client.id}`}>
                             <VisibilityOutlined className='text-sm' />
                           </Link>
