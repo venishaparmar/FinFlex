@@ -47,7 +47,7 @@ export default function AdminPage({ setAuth }) {
       <Sidebar />
       <div className='w-full px-8 py-8 pb-8 mb-4 bg-white border rounded shadow-md h-[900px]'>
         {/* HEADER */}
-        <div className='px-4 py-5 sm:px-6 rounded shadow-md bg-red-500 flex justify-between items-center'>
+        <div className='px-4 py-5 sm:px-6 rounded shadow-md bg-blue-500 flex justify-between items-center'>
           <div>
             <h3 className='text-xl font-medium leading-6 text-white'>
               WELCOME {name}
@@ -90,15 +90,15 @@ export default function AdminPage({ setAuth }) {
         </div>
         <div className='flex gap-10'>
           {/* ACCOUNT INFO */}
-          <div className='w-1/4 h-[720px] mt-5 border rounded shadow-md border-t-4 border-t-red-500'>
+          <div className='w-1/4 h-[720px] mt-5 border rounded shadow-md border-t-4 border-t-blue-500'>
             <div className='py-5 px-5 '>
               <h3 className='text-xl mb-5 border-b-2'>Account Details</h3>
               <div className='flex flex-col justify-between items-center py-5 px-5 '>
-                <img
+                {/* <img
                   src='https://cdn3.iconfinder.com/data/icons/red-icons-1/512/Male-profile-icon-512.png'
                   alt=''
                   className='w-full h-full'
-                />
+                /> */}
                 {/* USER INFO */}
                 <div className=''>
                   <div>

@@ -89,7 +89,7 @@ const AddAdmin = ({ setAuth }) => {
       <div className='w-full h-[900px] border bg-white shadow-md rounded'>
         <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
           {/* HEADER */}
-          <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-red-500 rounded shadow-md '>
+          <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
             {/* TITLE */}
             <div>
               <h3 className='text-lg font-medium leading-6 text-white'>
@@ -121,7 +121,7 @@ const AddAdmin = ({ setAuth }) => {
             onSubmit={(e) => {
               onSubmit(e);
             }}
-            className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-red-500 '
+            className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-blue-500 '
           >
             {/* FIRST NAME */}
             <label htmlFor='firstname'>First Name: </label>
@@ -218,12 +218,12 @@ const AddAdmin = ({ setAuth }) => {
             {/* BUTTONS */}
             <button
               type='submit'
-              className=' bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6'
+              className=' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6'
             >
               Save
             </button>
 
-            <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10'>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10'>
               <Link to='/admin'>Cancel</Link>
             </button>
           </form>

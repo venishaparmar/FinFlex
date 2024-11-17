@@ -63,7 +63,7 @@ const Admins = ({ setAuth }) => {
   }, []);
 
   return (
-    <div className='w-full h-[720px] border bg-white shadow-md rounded mt-5  border-t-4 border-t-red-500'>
+    <div className='w-full h-[720px] border bg-white shadow-md rounded mt-5  border-t-4 border-t-blue-500'>
       <ToastContainer />
       <div className='py-5 px-5'>
         {/* TITLE */}
@@ -71,7 +71,7 @@ const Admins = ({ setAuth }) => {
           <h3 className='text-lg font-medium  text-gray   px-1 '>
             Manage Admins
           </h3>
-          <button className='border hover:bg-red-700 bg-red-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5'>
+          <button className='border hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5'>
             <Link to='/addAdmin'>Add Admin</Link>
           </button>
         </div>
@@ -92,10 +92,10 @@ const Admins = ({ setAuth }) => {
             </thead>
             <tbody>
               {admins.length <= 0 ? (
-                <tr className='border px-4 py-2 bg-red-50'>
+                <tr className='border px-4 py-2 bg-blue-50'>
                   <td></td>
                   <td></td>
-                  <td className='px-4 py-2 bg-red-50'>No Admin Data</td>
+                  <td className='px-4 py-2 bg-blue-50'>No Admin Data</td>
                   <td></td>
                   <td></td>
                 </tr>
@@ -112,13 +112,13 @@ const Admins = ({ setAuth }) => {
                       <td className='border px-4 py-2 bg-gray-50'>
                         {admin.contactNumber}
                       </td>
-                      <td className='border px-4 py-2'>{admin.address}</td>
+                    <td className='border px-4 py-2'>{admin.address}</td>
                       <td className='border px-4 py-2 bg-gray-50'>
                         {admin.email}
                       </td>
                       <td className='border px-4 py-2'>
                         <button
-                          className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
+                          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
                           onClick={() => deleteAdmin(admin.id)}
                         >
                           <DeleteForever className='text-lg' />
