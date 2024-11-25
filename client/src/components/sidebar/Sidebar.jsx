@@ -93,14 +93,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const Sidebar = () => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true); // Set initial state to open
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const toggleDrawer = () => {
+    setOpen(!open);
   };
 
   return (
@@ -120,7 +116,7 @@ const Sidebar = () => {
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={toggleDrawer}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
@@ -163,11 +159,11 @@ const Sidebar = () => {
         </div>
       </Drawer>
 
-      {/* Menu Icon Button to open the Sidebar */}
+      {/* Menu Icon Button to open or close the Sidebar */}
       <IconButton
         color="inherit"
-        aria-label="open drawer"
-        onClick={handleDrawerOpen}
+        aria-label="toggle drawer"
+        onClick={toggleDrawer}
         edge="start"
         sx={{ position: 'absolute', top: 16, left: 16 }}
       >
@@ -178,3 +174,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
