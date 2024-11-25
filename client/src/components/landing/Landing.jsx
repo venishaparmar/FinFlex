@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import image1 from './Revenue-pana1.png';
 import image2 from './Business deal-pana.png';
@@ -22,7 +21,7 @@ const Landing = () => {
         <nav className='flex justify-between max-w-screen-xl px-4 py-5 mx-auto'>
           <div className='flex items-center'>
             <h3 className='text-2xl font-extrabold tracking-tight text-blue-500 '>
-            FinFlex<span className='text-gray-900'>.</span>
+            FinFlex
             </h3>
           </div>
           <div>
@@ -60,8 +59,7 @@ const Landing = () => {
               <li>
                 <a
                   href='#contacts'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '
-                >
+                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '>
                   Contact
                 </a>
               </li>
