@@ -1,6 +1,5 @@
 import { CreditScore } from '@mui/icons-material';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function LoansWidget() {
   const [loans, setLoans] = useState([]);
@@ -15,12 +14,10 @@ export default function LoansWidget() {
       });
 
       const parseRes = await response.json();
-      // console.log(parseRes);
-
       setLoans(parseRes);
 
       setGross(
-        loans.map((loan) => {
+        parseRes.map((loan) => {
           return Number(loan.gross_loan);
         })
       );
@@ -28,30 +25,31 @@ export default function LoansWidget() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getLoans();
+  }, []);
+
+  useEffect(() => {
     setTotal(gross.reduce((a, b) => a + b, 0));
   }, [gross]);
 
-  // console.log(loans.length);
   return (
-    <div className='w-full'>
+    <div className=' px-4 sm:px-6 lg:px-8'>
       {/* Loans */}
       <div
-        className='w-full  mt-5 p-8 rounded-xl cursor-pointer border border-t-4 border-t-blue-500 hover:bg-blue-500
-        hover:text-white hover:text-base transition duration-150
-        ease-in-out shadow-md'
+        className='mt-5 p-6 sm:p-8 rounded-xl cursor-pointer border border-t-4 border-t-blue-500 hover:bg-blue-500
+        hover:text-white hover:text-base transition duration-150 ease-in-out shadow-md
+        flex flex-col items-center sm:items-start text-center sm:text-left'
       >
-        <span className='text-xl'>Loans</span>
-        <div className='my-3'>
-          <span className='text-3xl'>
-            <CreditScore className='mr-3' />₹{' '}
-            {new Intl.NumberFormat().format(total)}
+        <span className='text-lg sm:text-xl font-semibold'>Loans</span>
+        <div className='my-3 flex items-center justify-center sm:justify-start'>
+          <CreditScore className='mr-2 text-xl sm:text-2xl' />
+          <span className='text-3xl sm:text-4xl'>
+            ₹ {new Intl.NumberFormat().format(total)}
           </span>
         </div>
-        <span className='text-xl'>
-          Total Loans Transactions
-        </span>
+        <span className='text-base sm:text-lg'>Total Loans Transactions</span>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import { ReceiptLong } from '@mui/icons-material';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function PaymentsWidget() {
   const [payments, setPayments] = useState([]);
@@ -15,13 +14,10 @@ export default function PaymentsWidget() {
       });
 
       const parseRes = await response.json();
-
-      // console.log(parseRes);
-
       setPayments(parseRes);
 
       setAmounts(
-        payments.map((payment) => {
+        parseRes.map((payment) => {
           return Number(payment.amount);
         })
       );
@@ -32,29 +28,29 @@ export default function PaymentsWidget() {
 
   useEffect(() => {
     getPayments();
+  }, []);
+
+  useEffect(() => {
     setTotal(amounts.reduce((acc, val) => acc + val, 0));
   }, [amounts]);
 
   return (
-    <div className='w-full'>
+    <div className=' px-4 sm:px-6 lg:px-8'>
       {/* Payments */}
       <div
-        className='w-full  mt-5 p-8 rounded-xl cursor-pointer border border-t-4 border-t-blue-500 hover:bg-blue-500
-        hover:text-white hover:text-base transition duration-150
-        ease-in-out shadow-md'
+        className='mt-5 p-6 sm:p-8 rounded-xl cursor-pointer border border-t-4 border-t-blue-500 hover:bg-blue-500
+        hover:text-white hover:text-base transition duration-150 ease-in-out shadow-md
+        flex flex-col items-center sm:items-start text-center sm:text-left'
       >
-        <span className='text-xl '>Payments</span>
-        <div className='my-3'>
-          <span className='text-3xl'>
-            <ReceiptLong className='mr-3' /> ₹
-            {new Intl.NumberFormat().format(total)}
+        <span className='text-lg sm:text-xl font-semibold'>Payments</span>
+        <div className='my-3 flex items-center justify-center sm:justify-start'>
+          <ReceiptLong className='mr-2 text-xl sm:text-2xl' />
+          <span className='text-3xl sm:text-4xl'>
+            ₹ {new Intl.NumberFormat().format(total)}
           </span>
         </div>
-        <span className='text-xl'>
-          Total Payments Collected
-        </span>
+        <span className='text-base sm:text-lg'>Total Payments Collected</span>
       </div>
-      {/*  */}
     </div>
   );
 }
