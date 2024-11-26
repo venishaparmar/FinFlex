@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-
 import { DeleteForever, VisibilityOutlined, Logout } from '@mui/icons-material';
 
 const Admins = ({ setAuth }) => {
@@ -14,17 +12,13 @@ const Admins = ({ setAuth }) => {
         method: 'GET',
         headers: { Authorization: localStorage.getItem('token') },
       });
-
       const parseRes = await response.json();
-
       setAdmins(parseRes);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(admins);
 
-  // Delete ADMIN Function
   const deleteNotif = () => {
     toast.promise(
       new Promise((resolve, reject) => {
@@ -34,7 +28,7 @@ const Admins = ({ setAuth }) => {
       }),
       {
         pending: 'Deleting Admin...',
-        success: 'Deleted Succesfully!',
+        success: 'Deleted Successfully!',
         error: 'Error!',
       },
       {
@@ -63,70 +57,55 @@ const Admins = ({ setAuth }) => {
   }, []);
 
   return (
-    <div className='w-full h-[720px] border bg-white shadow-md rounded mt-5  border-t-4 border-t-blue-500'>
+    <div className="w-full h-[720px] bg-white shadow-md rounded mt-5 border-t-4 border-t-blue-500">
       <ToastContainer />
-      <div className='py-5 px-5'>
+      <div className="py-5 px-5">
         {/* TITLE */}
-        <div className='flex items-center justify-between border-b-2'>
-          <h3 className='text-lg font-medium  text-gray   px-1 '>
-            Manage Admins
-          </h3>
-          <button className='border hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5'>
-            <Link to='/addAdmin'>Add Admin</Link>
+        <div className="flex items-center justify-between border-b-2 mb-4">
+          <h3 className="text-lg font-medium text-gray-800 px-1">Manage Admins</h3>
+          <button className="border hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline mr-5">
+            <Link to="/addAdmin">Add Admin</Link>
           </button>
         </div>
+
         {/* INFO */}
-        <div className='w-full h-[600px] px-4   mt-5 overflow-auto hover:overflow-scroll border rounded shadow-md '>
-          <table className='table-fixed text-center mb-2'>
-            <thead className=' mt-5'>
-              <tr className=' mt-10'>
-                <th className='w-1/1 px-1 py-2 text-gray-600'>ID</th>
-                <th className='w-1/4 px-1 py-2 text-gray-600'>Full Name</th>
-                <th className='w-1/4 px-1 py-2 text-gray-600'>
-                  Contact Number
-                </th>
-                <th className='w-1/4 px-4 py-2 text-gray-600'>Address</th>
-                <th className='w-1/4 px-1 py-2 text-gray-600'>Email</th>
-                <th className='w-1/1 px-1 py-2 text-gray-600'>Delete</th>
+        <div className="w-full h-[600px] px-4 mt-5 overflow-auto border rounded shadow-md">
+          <table className="table-fixed text-center mb-2 w-full">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 text-gray-600">ID</th>
+                <th className="px-4 py-2 text-gray-600">Full Name</th>
+                <th className="px-4 py-2 text-gray-600">Contact Number</th>
+                <th className="px-4 py-2 text-gray-600">Address</th>
+                <th className="px-4 py-2 text-gray-600">Email</th>
+                <th className="px-4 py-2 text-gray-600">Delete</th>
               </tr>
             </thead>
             <tbody>
-              {admins.length <= 0 ? (
-                <tr className='border px-4 py-2 bg-blue-50'>
-                  <td></td>
-                  <td></td>
-                  <td className='px-4 py-2 bg-blue-50'>No Admin Data</td>
-                  <td></td>
-                  <td></td>
+              {admins.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="text-center px-4 py-2 bg-blue-50">
+                    No Admin Data
+                  </td>
                 </tr>
               ) : (
-                admins.map((admin, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className='border px-4 py-2 bg-gray-50'>
-                        {admin.id}
-                      </td>
-                      <td className='border px-4 py-2 '>
-                        {admin.firstName + ' ' + admin.lastName}{' '}
-                      </td>
-                      <td className='border px-4 py-2 bg-gray-50'>
-                        {admin.contactNumber}
-                      </td>
-                    <td className='border px-4 py-2'>{admin.address}</td>
-                      <td className='border px-4 py-2 bg-gray-50'>
-                        {admin.email}
-                      </td>
-                      <td className='border px-4 py-2'>
-                        <button
-                          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
-                          onClick={() => deleteAdmin(admin.id)}
-                        >
-                          <DeleteForever className='text-lg' />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
+                admins.map((admin, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2 bg-gray-50">{admin.id}</td>
+                    <td className="border px-4 py-2">{admin.firstName} {admin.lastName}</td>
+                    <td className="border px-4 py-2 bg-gray-50">{admin.contactNumber}</td>
+                    <td className="border px-4 py-2">{admin.address}</td>
+                    <td className="border px-4 py-2 bg-gray-50">{admin.email}</td>
+                    <td className="border px-4 py-2">
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm"
+                        onClick={() => deleteAdmin(admin.id)}
+                      >
+                        <DeleteForever className="text-lg" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
