@@ -1,67 +1,4 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// import {
-//   PermIdentity,
-//   CreditScore,
-//   ReceiptLong,
-//   MailOutline,
-//   Home,
-// } from '@mui/icons-material';
-
-// export default function Sidebar() {
-//   return (
-//     <div className='md:block px-5 py-5 md:w-60 lg:w-60 transition-transform duration-300 ease-in-out border shadow-lg rounded-md'>
-//       {/* LOGO */}
-//       <div className='my-10'>
-//         <h3 className='text-center text-2xl'>FinFlex</h3>
-//         <p className='text-center text-sm'>Lending Application</p>
-//       </div>
-
-//       <hr className='h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent' />
-//       {/* MENU */}
-//       <div className='my-10'>
-//         <ul>
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out cursor-pointer'>
-//             <Home />
-//             <Link to='/home' className='ml-2.5'>
-//               Home
-//             </Link>
-//           </li>
-
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <PermIdentity />
-//             <Link to='/borrowers' className='ml-2.5'>
-//               Borrowers
-//             </Link>
-//           </li>
-
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <CreditScore />
-//             <Link to='/loans' className='ml-2.5'>
-//               Loans
-//             </Link>
-//           </li>
-
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <ReceiptLong />
-//             <Link to='/payments' className='ml-2.5'>
-//               Payments
-//             </Link>
-//           </li>
-
-//           <li className='text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out'>
-//             <MailOutline />
-//             <Link to='/emailClient' className='ml-2.5'>
-//               Email
-//             </Link>
-//           </li>
-//         </ul>
-//       </div>
-//     </div>
-//   );
-// }
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -82,7 +19,7 @@ import {
 
 const drawerWidth = 240;
 
-// Styled components for persistent drawer behavior
+// Styled Drawer Header
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -93,15 +30,25 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const Sidebar = () => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true); // Set initial state to open
+  const [open, setOpen] = useState(false); // Default is closed for mobile view
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      {/* Drawer for the Sidebar */}
+    <Box className="flex">
+      {/* Sidebar Toggle Button */}
+      <IconButton
+        color="inherit"
+        aria-label="toggle drawer"
+        onClick={toggleDrawer}
+        className="" // Displayed only on small screens
+      >
+        <MenuIcon />
+      </IconButton>
+
+      {/* Sidebar Drawer */}
       <Drawer
         sx={{
           width: drawerWidth,
@@ -111,9 +58,10 @@ const Sidebar = () => {
             boxSizing: 'border-box',
           },
         }}
-        variant="persistent"
+        variant="temporary" // Mobile-friendly drawer
         anchor="left"
         open={open}
+        onClose={toggleDrawer} // Close on backdrop click
       >
         <DrawerHeader>
           <IconButton onClick={toggleDrawer}>
@@ -129,49 +77,34 @@ const Sidebar = () => {
             <h3 className="text-2xl font-semibold">FinFlex</h3>
             <p className="text-sm text-gray-600">Lending Application</p>
           </div>
-          <hr className="h-px bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent" />
+          <Divider />
 
           {/* MENU */}
           <div className="my-10">
-            <ul>
-              <li className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out cursor-pointer">
-                <Home />
-                <Link to="/home" className="ml-2.5">Home</Link>
-              </li>
-              <li className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out cursor-pointer">
-                <PermIdentity />
-                <Link to="/borrowers" className="ml-2.5">Borrowers</Link>
-              </li>
-              <li className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out cursor-pointer">
-                <CreditScore />
-                <Link to="/loans" className="ml-2.5">Loans</Link>
-              </li>
-              <li className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out cursor-pointer">
-                <ReceiptLong />
-                <Link to="/payments" className="ml-2.5">Payments</Link>
-              </li>
-              <li className="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out cursor-pointer">
-                <MailOutline />
-                <Link to="/emailClient" className="ml-2.5">Email</Link>
-              </li>
+            <ul className="space-y-4">
+              {[
+                { to: '/home', label: 'Home', Icon: Home },
+                { to: '/borrowers', label: 'Borrowers', Icon: PermIdentity },
+                { to: '/loans', label: 'Loans', Icon: CreditScore },
+                { to: '/payments', label: 'Payments', Icon: ReceiptLong },
+                { to: '/emailClient', label: 'Email', Icon: MailOutline },
+              ].map(({ to, label, Icon }) => (
+                <li
+                  key={to}
+                  className="flex items-center text-gray-700 hover:bg-blue-500 hover:text-white rounded-md transition duration-150 ease-in-out py-2 px-4 cursor-pointer"
+                >
+                  <Icon className="mr-3" />
+                  <Link to={to} className="w-full">
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </Drawer>
-
-      {/* Menu Icon Button to open or close the Sidebar */}
-      <IconButton
-        color="inherit"
-        aria-label="toggle drawer"
-        onClick={toggleDrawer}
-        edge="start"
-        sx={{ position: 'absolute', top: 16, left: 16 }}
-      >
-        <MenuIcon />
-      </IconButton>
     </Box>
   );
 };
 
 export default Sidebar;
-
