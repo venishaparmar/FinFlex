@@ -1,10 +1,9 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import emailjs from 'emailjs-com';
 import { toast, ToastContainer } from 'react-toastify';
 
 export default function Message({ email }) {
-  const [fullname, setFullname] = useState([]);
+  const [fullname, setFullname] = useState('');
 
   const getClient = async () => {
     try {
@@ -19,16 +18,17 @@ export default function Message({ email }) {
       console.log(error);
     }
   };
+
   const addSuccessful = () => {
     toast.promise(
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         setTimeout(() => {
           resolve();
         }, 1000);
       }),
       {
         pending: 'Sending your mail...',
-        success: 'Sent Succesfully!',
+        success: 'Sent Successfully!',
         error: 'Error!',
       },
       {
@@ -56,100 +56,102 @@ export default function Message({ email }) {
         }
       );
     addSuccessful();
-
-    // e.target.reset();
   };
 
   useEffect(() => {
     getClient();
-  });
+  }, [email]);
 
   return (
-    <div className='flex'>
+    <div className="flex flex-col items-center">
       <ToastContainer />
-      <div className='w-full h-[650px] px-4 mt-5 border rounded shadow-md border-t-4 border-t-blue-500 '>
-        <div class='w-full px-8  bg-white '>
-          <div class=' py-2.5 '>
-            <form onSubmit={sendEmail} class='space-y-8'>
-              {/* NAME EMAIL */}
-              <div className='flex w-full gap-5'>
-                {/* FIRSTNAME */}
-                <div className='w-full'>
-                  <label
-                    className='block text-gray-700 text-sm font-bold mb-2'
-                    htmlFor='fullname'
-                  >
-                    Full Name:
-                  </label>
-                  <input
-                    type='text'
-                    className='block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500'
-                    name='fullname'
-                    value={fullname}
-                    placeholder='Choose a borrower'
-                  />
-                </div>
-
-                {/* EMAIL */}
-                <div className='w-full'>
-                  <label
-                    className='block text-gray-700 text-sm font-bold mb-2'
-                    htmlFor='email'
-                  >
-                    Email:
-                  </label>
-                  <input
-                    type='email'
-                    className='block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500'
-                    name='email'
-                    value={email}
-                  />
-                </div>
-              </div>
-
-              {/* SUBJECT */}
-              <div>
+      <div className="w-full max-w-3xl px-4 mt-5 border rounded shadow-md border-t-4 border-t-blue-500">
+        <div className="px-4 py-6 bg-white">
+          <form onSubmit={sendEmail} className="space-y-6">
+            {/* Name and Email */}
+            <div className="flex flex-col md:flex-row md:gap-5">
+              {/* Fullname */}
+              <div className="w-full mb-4 md:mb-0">
                 <label
-                  for='subject'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="fullname"
                 >
-                  Subject
+                  Full Name:
                 </label>
-                <select
-                  class='block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500'
-                  name='subject'
-                  id='subject'
-                >
-                  <option value='Loan Approval'>Loan Approval</option>
-                  <option value='Loan Denied'>Loan Denied</option>
-                  <option value='Loan Disbursed'>Loan Disbursed</option>
-                </select>
+                <input
+                  type="text"
+                  className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                  name="fullname"
+                  value={fullname}
+                  placeholder="Choose a borrower"
+                  readOnly
+                />
               </div>
 
-              {/* MESSAGE */}
-              <div class='sm:col-span-2'>
+              {/* Email */}
+              <div className="w-full">
                 <label
-                  for='message'
-                  class='block mb-2 text-sm font-medium text-gray-900'
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="email"
                 >
-                  Your message
+                  Email:
                 </label>
-                <textarea
-                  name='message'
-                  id='message'
-                  rows='12'
-                  class='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500'
-                  placeholder='Write your message...'
-                ></textarea>
+                <input
+                  type="email"
+                  className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                  name="email"
+                  value={email}
+                  readOnly
+                />
               </div>
+            </div>
+
+            {/* Subject */}
+            <div>
+              <label
+                htmlFor="subject"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Subject
+              </label>
+              <select
+                className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                name="subject"
+                id="subject"
+              >
+                <option value="Loan Approval">Loan Approval</option>
+                <option value="Loan Denied">Loan Denied</option>
+                <option value="Loan Disbursed">Loan Disbursed</option>
+              </select>
+            </div>
+
+            {/* Message */}
+            <div>
+              <label
+                htmlFor="message"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Your message
+              </label>
+              <textarea
+                name="message"
+                id="message"
+                rows="6"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                placeholder="Write your message..."
+              ></textarea>
+            </div>
+
+            {/* Submit Button */}
+            <div className="text-center">
               <button
-                type='submit'
-                class='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline '
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline w-full md:w-auto"
               >
                 Send message
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
