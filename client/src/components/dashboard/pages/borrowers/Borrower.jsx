@@ -53,21 +53,17 @@ export default function Borrower({ setAuth }) {
   }, [clientId]); // Fetch client data whenever clientId changes
 
   return (
-    <div className='h-[900px] flex'>
-      <Sidebar />
-
-      <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
+    <div className='h-full flex'>
+      <div className='w-full h-full mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
         {/* BORROWER INFO */}
         <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md'>
-          <div>
-            <h3 className='text-lg font-medium leading-6 text-white'>
-              Borrower Info
-            </h3>
-            <p className='mt-1 max-w-2xl text-sm text-white'>
-              All client's information
-            </p>
+          <div className='text-sm md:text-md text-white pl-2'>
+            <Sidebar />
           </div>
-
+          <div className='flex-grow px-4 text-center'>
+            <h3 className='text-lg font-medium text-white'>Borrower Info</h3>
+            <p className='text-sm text-white'>All client's information</p>
+          </div>
           <div className='text-white'>
             <button
               className=''
@@ -83,49 +79,45 @@ export default function Borrower({ setAuth }) {
         </div>
 
         {/* BORROWER ITEMS */}
-        <div className='flex'>
+        <div className='flex flex-wrap justify-between mt-5'>
           {/* ACCOUNT INFO */}
-          <div className='w-1/4 h-[720px] mt-5 border rounded shadow-md border-t-4 border-t-blue-500'>
+          <div className='w-full h-auto border rounded shadow-md border-t-4 border-t-blue-500 mb-5 sm:mb-0'>
             <div className='py-5 px-5'>
-              <div className='flex flex-col justify-between items-center py-5 px-5'>
-                {/* <img
-                  src='https://cdn3.iconfinder.com/data/icons/red-icons-1/512/Male-profile-icon-512.png'
-                  alt=''
-                  className='w-full h-full'
-                /> */}
+              <div className='flex flex-wrap sm:flex-nowrap justify-between items-start sm:items-center space-x-5'>
                 {/* USER INFO */}
-                <div>
-                  <div className='flex items-center my-5'>
-                    <PermIdentity className='text-lg' />
-                    <span className='ml-2.5'>{name}</span>
+                <div className='w-full sm:w-auto ml-4'>
+                  <div className='flex items-center'>
+                    <PermIdentity className='text-lg sm:text-xl' />
+                    <span className='ml-2.5 text-sm sm:text-base'>{name}</span>
                   </div>
                   <div className='flex items-center my-5'>
-                    <MailOutline className='text-lg ' />
-                    <span className='ml-2.5'>{email}</span>
+                    <MailOutline className='text-lg sm:text-xl' />
+                    <span className='ml-2.5 text-sm sm:text-base'>{email}</span>
                   </div>
                   <div className='flex items-center my-5'>
-                    <PhoneAndroid className='text-lg ' />
-                    <span className='ml-2.5'>{contactnumber}</span>
+                    <PhoneAndroid className='text-lg sm:text-xl' />
+                    <span className='ml-2.5 text-sm sm:text-base'>{contactnumber}</span>
                   </div>
                   <div className='flex items-center my-5'>
-                    <LocationOnOutlined className='text-lg ' />
-                    <span className='ml-2.5'>{address}</span>
+                    <LocationOnOutlined className='text-lg sm:text-xl' />
+                    <span className='ml-2.5 text-sm sm:text-base'>{address}</span>
                   </div>
-                  <div className='flex items-center my-5'>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
-                      <Link to={`/editBorrower/${clientId}`}>
+                  <div className='flex items-center'>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto'>
+                      <Link to={`/editBorrower/${clientId}`} className='block text-center'>
                         UPDATE CLIENT
                       </Link>
                     </button>
                   </div>
                 </div>
+
+                {/* You can add more sections for loan info or other details here */}
+                {/* LOAN INFO */}
               </div>
             </div>
           </div>
-
-          {/* LOAN INFO */}
-          <LoanInfo />
         </div>
+        <LoanInfo />
       </div>
     </div>
   );

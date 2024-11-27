@@ -46,7 +46,7 @@ const AddBorrower = ({ setAuth }) => {
     e.preventDefault();
     try {
       const body = { firstname, lastname, contactNumber, address, email, username };
-  
+
       const response = await fetch('http://localhost:8000/addClient', {
         method: 'POST',
         headers: {
@@ -55,9 +55,9 @@ const AddBorrower = ({ setAuth }) => {
         },
         body: JSON.stringify(body),
       });
-  
+
       const parseRes = await response.json();
-  
+
       if (response.status === 401) {
         // Display error toast if the user already exists
         toast.error(parseRes.error);
@@ -70,24 +70,22 @@ const AddBorrower = ({ setAuth }) => {
       toast.error('Server error');
     }
   };
-  
+
 
   return (
     <div className='flex h-[900px] '>
-      <Sidebar />
-
       <div className='w-full h-[900px] border bg-white shadow-md rounded'>
         <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
           {/* HEADER */}
           <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
             {/* TITLE */}
-            <div>
-              <h3 className='text-lg font-medium leading-6 text-white'>
-                Add New Borrower
-              </h3>
-              <p className='mt-1 max-w-2xl text-sm text-white'>
-                Register all the required fields.
-              </p>
+            <div className='text-sm md:text-md text-white pl-2'>
+              <Sidebar />
+            </div>
+            {/* HEADER CONTENT */}
+            <div className='flex-grow px-4 text-center'>
+              <h3 className='text-lg font-medium text-white'>Add New Borrower</h3>
+              <p className='text-sm text-white'>Register all the required fields.</p>
             </div>
             <ToastContainer />
 
@@ -191,18 +189,20 @@ const AddBorrower = ({ setAuth }) => {
               placeholder='Username'
               required
             />
-
             {/* BUTTONS */}
-            <button
-              type='submit'
-              className=' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6'
-            >
-              Save
-            </button>
-
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10'>
-              <Link to='/borrowers'>Cancel</Link>
-            </button>
+            <div className='flex flex-col sm:flex-row sm:justify-start'>
+              <button
+                type='submit'
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-2 sm:mb-0 sm:mr-4 w-full sm:w-auto'
+              >
+                Save
+              </button>
+              <Link to='/borrowers' className='w-full sm:w-auto'>
+                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full'>
+                  Cancel
+                </button>
+              </Link>
+            </div>
           </form>
         </div>
       </div>

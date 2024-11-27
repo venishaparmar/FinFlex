@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { DeleteForever, VisibilityOutlined, Logout } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
@@ -17,30 +16,23 @@ const Borrowers = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
-
       setClients(parseRes);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(clients);
 
-  // Delete CLIENT Function
   const deleteNotif = () => {
     toast.promise(
-      new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 2000);
+      new Promise((resolve) => {
+        setTimeout(() => resolve(), 2000);
       }),
       {
         pending: 'Deleting Client...',
-        success: 'Deleted Succesfully!',
+        success: 'Deleted Successfully!',
         error: 'Error!',
       },
-      {
-        autoClose: 2000,
-      }
+      { autoClose: 2000 }
     );
   };
 
@@ -64,110 +56,86 @@ const Borrowers = ({ setAuth }) => {
   }, []);
 
   return (
-    <div className='text-gray-900 h-[900px] flex'>
-      <Sidebar />
+    <div className='h-full'>
+    <div className='text-gray-900 h-auto flex flex-col lg:flex-row'>
       <ToastContainer />
-      {/* Clients */}
-      <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
+      <div className='w-full mx-auto px-4 py-4 bg-white border shadow-md rounded-lg overflow-hidden'>
         {/* HEADER */}
-        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
-          <div>
-            <h3 className='text-lg font-medium leading-6 text-white'>
-              Borrowers
-            </h3>
-            <p className='mt-1 max-w-2xl text-sm text-white'>
-              All clients registered
-            </p>
+        <div className='flex flex-col md:flex-row items-center justify-between p-5 bg-blue-500 rounded shadow-md'>
+          <div className='text-sm md:text-md text-white mb-2 md:mb-0'>
+            <Sidebar />
           </div>
-
-          {/* BUTTON */}
-
+          <div className='flex-grow px-4 text-center'>
+            <h3 className='text-lg font-medium text-white'>Borrowers</h3>
+            <p className='text-sm text-white'>All clients registered</p>
+          </div>
           <div className='text-white'>
-            <button
-              className=''
-              onClick={(e) => {
-                setAuth(false);
-              }}
-            >
+            <button onClick={() => setAuth(false)}>
               <Link to='/login'>
-                <Logout />
+                <Logout className='text-2xl md:text-3xl' />
               </Link>
             </button>
           </div>
         </div>
 
         {/* TITLE */}
-        <div className='flex items-center justify-between border-y-2 mt-5'>
-          <h3 className='text-lg font-medium leading-6 text-gray my-2  px-1 py-2 '>
+        <div className='flex flex-col sm:flex-row items-center justify-between border-y-2 mt-5'>
+          <h3 className='text-lg mx-2 font-medium leading-6 text-gray-700 mb-2 sm:mb-0'>
             Borrowers' List
           </h3>
-          <button className='border hover:bg-blue-700 bg-blue-500 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-auto mt-2 mr-5'>
+          <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none mb-2 sm:mb-0'>
             <Link to='/addBorrower'>Add Borrower</Link>
           </button>
         </div>
 
         {/* INFO */}
-        <div className='w-full h-[640px] px-4   mt-5 overflow-auto hover:overflow-scroll border rounded shadow-md border-t-4 border-t-blue-500 '>
-          <table className='table-fixed text-center mb-2'>
-            <thead className=' mt-5'>
-              <tr className=' mt-10'>
-                <th className='w-1/1 px-1 py-2 text-gray-600'>ID</th>
-                <th className='w-1/4 px-1 py-2 text-gray-600'>Full Name</th>
-                <th className='w-1/4 px-1 py-2 text-gray-600'>
-                  Contact Number
-                </th>
-                <th className='w-1/4 px-4 py-2 text-gray-600'>Address</th>
-                <th className='w-1/4 px-1 py-2 text-gray-600'>Email</th>
-                <th className='w-1/1 px-1 py-2 text-gray-600'>Action</th>
+        <div className='w-full mt-5 overflow-x-auto'>
+          <table className='w-full text-center mb-4'>
+            <thead className='bg-gray-100'>
+              <tr>
+                {['ID', 'Full Name', 'Contact Number', 'Address', 'Email', 'Action'].map((header) => (
+                  <th key={header} className='px-4 py-2 text-gray-600 text-sm md:text-md'>{header}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {clients.length <= 0 ? (
-                <tr className='border px-4 py-2 bg-blue-50'>
-                  <td></td>
-                  <td></td>
-                  <td className='px-4 py-2 bg-blue-50'>No Client Data</td>
-                  <td></td>
-                  <td></td>
+              {clients.length === 0 ? (
+                <tr>
+                  <td colSpan='6' className='px-4 py-4 text-gray-500'>
+                    No Client Data
+                  </td>
                 </tr>
               ) : (
-                clients.map((client, index) => {
-                  return (
-                    <tr key={index}>
-                      <td className='border px-4 py-2 bg-gray-50'>
-                        {client.id}
-                      </td>
-                      <td className='border px-4 py-2 '>
-                        {client.firstname + ' ' + client.lastname}{' '}
-                      </td>
-                      <td className='border px-4 py-2 bg-gray-50'>
-                        {client.contactnumber}
-                      </td>
-                      <td className='border px-4 py-2'>{client.address}</td>
-                      <td className='border px-4 py-2 bg-gray-50'>
-                        {client.email}
-                      </td>
-                      <td className='border px-4 py-2'>
+                clients.map((client) => (
+                  <tr key={client.id} className='border-b hover:bg-gray-50'>
+                    <td className='px-4 py-2'>{client.id}</td>
+                    <td className='px-4 py-2'>{`${client.firstname} ${client.lastname}`}</td>
+                    <td className='px-4 py-2'>{client.contactnumber}</td>
+                    <td className='px-4 py-2'>{client.address}</td>
+                    <td className='px-4 py-2'>{client.email}</td>
+                    <td className='px-4 py-2'>
+                      <div className='flex flex-col md:flex-row gap-2 justify-center'>
                         <button
-                          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
+                          className='bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded flex items-center justify-center'
                           onClick={() => deleteClient(client.id)}
                         >
-                          <DeleteForever className='text-lg' />
+                          <DeleteForever />
                         </button>
-                        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
+                        <button className='bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded flex items-center justify-center'>
                           <Link to={`/Borrower/${client.id}`}>
-                            <VisibilityOutlined className='text-sm' />
+                            <VisibilityOutlined />
                           </Link>
                         </button>
-                      </td>
-                    </tr>
-                  );
-                })
+                      </div>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
       </div>
+    </div>
     </div>
   );
 };
