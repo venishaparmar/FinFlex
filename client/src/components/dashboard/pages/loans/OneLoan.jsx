@@ -89,19 +89,19 @@ const OneLoan = () => {
                   <td className='border px-4 py-2 '>
                     {loans.status === 'Approved' ||
                     loans.status === 'Fully Paid' ? (
-                      <span className=' bg-green-500 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-green-500 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {loans.status}
                       </span>
                     ) : loans.status === 'Declined' ? (
-                      <span className=' bg-blue-400 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-blue-400 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {loans.status}
                       </span>
                     ) : loans.status === 'Pending' ? (
-                      <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {loans.status}
                       </span>
                     ) : (
-                      <span className=' bg-orange-300 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-orange-300 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {loans.status}
                       </span>
                     )}

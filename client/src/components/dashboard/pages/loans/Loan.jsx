@@ -74,9 +74,9 @@ const LoanInfo = () => {
     <div className=''>
       <ToastContainer />
       {/* Loans Information */}
-      <div className='flex flex-col w-full mx-auto pl-8 py-4 mb-4 bg-white gap-5 '>
+      <div className='flex flex-col w-full mx-auto py-4 mb-4 bg-white gap-5 '>
         {/* Active Loans */}
-        <div className='h-[350px] overflow-hidden hover:overflow-scroll border rounded shadow-md px-8 py-8 border-t-4 border-t-blue-500'>
+        <div className='h-auto overflow-hidden hover:overflow-scroll border rounded shadow-md px-8 py-8 border-t-4 border-t-blue-500'>
           <div className='flex items-center justify-between border-y-2'>
             <h3 className='text-lg font-medium leading-6 text-gray my-2  px-1 py-2 '>
               Loan Transactions
@@ -136,46 +136,41 @@ const LoanInfo = () => {
                       <td className='border px-4 py-2 '>
                         {loan.status === 'Approved' ||
                           loan.status === 'Fully Paid' ? (
-                          <span className=' bg-green-500 text-white px-4 py-1 rounded-md'>
+                          <span className=' bg-green-500 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                             {loan.status}
                           </span>
                         ) : loan.status === 'Declined' ? (
-                          <span className=' bg-blue-400 text-white px-4 py-1 rounded-md'>
+                          <span className=' bg-blue-400 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                             {loan.status}
                           </span>
                         ) : loan.status === 'Pending' ? (
-                          <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md'>
+                          <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                             {loan.status}
                           </span>
                         ) : (
-                          <span className=' bg-orange-300 text-white px-4 py-1 rounded-md'>
+                          <span className=' bg-orange-300 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                             {loan.status}
                           </span>
                         )}
                       </td>
 
-                      <td className='border px-4 py-2 flex'>
+                      <td className='border px-4 py-2 flex justify-center'>
                         <button
-                          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
+                          className='bg-blue-500 hover:bg-blue-700 text-white font-bold mt-2 py-2 px-3 mb-2 rounded focus:outline-none focus:shadow-outline w-full text-sm'
                           onClick={() => deleteLoan(loan.id)}
                         >
                           <DeleteForever className='text-lg' />
                         </button>
-                        <button className='bg-blue-500 hover:bg-blue-700 text-white px-3 rounded focus:outline-none focus:shadow-outline h-10 ml-2 mr-2'>
+                        <button className='bg-blue-500 hover:bg-blue-700 text-white mt-2 px-3 rounded focus:outline-none focus:shadow-outline h-10 ml-2'>
                           <Link to={`/editLoan/${loan.id}`}>
                             <Edit className='text-lg' />
                           </Link>
                         </button>
-                        <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold h-10 px-4 rounded focus:outline-none focus:shadow-outline w-full'>
+                        <button className='bg-blue-500 hover:bg-blue-700 text-white mt-2 px-3 rounded focus:outline-none focus:shadow-outline h-10 ml-2 mr-2'>
                           <Link to={`/payment/${loan.client_id}/${loan.id}`}>
                             <Payment className='text-lg' />
                           </Link>
                         </button>
-                        {/* <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold h-10 px-4 rounded focus:outline-none focus:shadow-outline w-full '>
-                          <Link to={`/payment/${loan.client_id}/${loan.id}`}>
-                            ₹
-                          </Link>
-                        </button> */}
                       </td>
                     </tr>
                   );

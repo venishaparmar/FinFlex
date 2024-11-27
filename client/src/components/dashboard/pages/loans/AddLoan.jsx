@@ -45,7 +45,7 @@ const AddLoan = ({ setAuth }) => {
       }),
       {
         pending: 'Adding Loan...',
-        success: 'Added Succesfully!',
+        success: 'Added Successfully!',
         error: 'Error!',
       },
       {
@@ -89,33 +89,31 @@ const AddLoan = ({ setAuth }) => {
   };
 
   return (
-    <div className='flex h-[900px]'>
-      <Sidebar />
+    <div className="flex h-full">
+
       <ToastContainer />
 
       {/* Add Loan */}
-      <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
+      <div className="w-full mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded">
         {/* TITLE */}
-        <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
-          <div>
-            <h3 className='text-lg font-medium leading-6 text-white'>
-              Add Loan for Client #{clientId}
-            </h3>
-            <p className='mt-1 max-w-2xl text-sm text-white'>
-              Fill all the required fields.
-            </p>
+        <div className="flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md">
+          <div className="text-sm md:text-md text-white pl-2">
+            <Sidebar />
+          </div>
+          <div className="flex-grow px-4 text-center">
+            <h3 className="text-lg font-medium text-white">Add Loan for Client #{clientId}</h3>
+            <p className="text-sm text-white">Fill all the required fields.</p>
           </div>
 
           {/* BUTTON */}
-
-          <div className='text-white'>
+          <div className="text-white">
             <button
-              className=''
+              className=""
               onClick={(e) => {
                 setAuth(false);
               }}
             >
-              <Link to='/login'>
+              <Link to="/login">
                 <Logout />
               </Link>
             </button>
@@ -124,141 +122,140 @@ const AddLoan = ({ setAuth }) => {
 
         {/* FORM */}
         <form
-          className='grid grid-cols-2 mt-5 p-8 h-[650px] rounded border shadow-md border-t-4 border-t-blue-500 '
+          className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-4 mt-5 p-8 h-auto rounded border shadow-md border-t-4 border-t-blue-500"
           onSubmit={onSubmit}
         >
           {/* TYPE */}
-          <div>
-            <label htmlFor='type'>Type of Loan:</label>
+          <div className="mb-4">
+            <label htmlFor="type">Type of Loan:</label>
             <select
-              className='block border border-grey-500 w-10/12 p-3 rounded'
-              name='type'
-              id='type'
+              className="block border border-grey-500 w-full p-3 rounded"
+              name="type"
+              id="type"
               value={type}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={(e) => onChange(e)}
             >
-              <option value='Personal Loan'>Personal Loan</option>
-              <option value='Salary Loan'>Salary Loan</option>
-              <option value='Business Loan'>Business Loan</option>
+              <option value="Personal Loan">Personal Loan</option>
+              <option value="Salary Loan">Salary Loan</option>
+              <option value="Business Loan">Business Loan</option>
             </select>
           </div>
 
           {/* STATUS */}
-          <div>
-            <label htmlFor='maturity_date'>Status:</label>
+          <div className="mb-4">
+            <label htmlFor="maturity_date">Status:</label>
             <input
-              className='block border border-grey-500 w-10/12 p-3 rounded'
-              name='status'
-              id='status'
-              value='Pending'
+              className="block border border-grey-500 w-full p-3 rounded"
+              name="status"
+              id="status"
+              value="Pending"
               disabled
             />
           </div>
 
           {/* GROSS LOAN */}
-          <div>
-            <label htmlFor='gross_loan'>Gross Loan:</label>
+          <div className="mb-4">
+            <label htmlFor="gross_loan">Gross Loan:</label>
             <input
-              type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded'
-              placeholder='Gross Loan'
-              name='gross_loan'
+              type="number"
+              className="block border border-grey-500 w-full p-3 rounded"
+              placeholder="Gross Loan"
+              name="gross_loan"
               value={gross_loan}
               onChange={(e) => onChange(e)}
             />
           </div>
 
           {/* BALANCE */}
-          <div>
-            <label htmlFor='gross_loan'>Balance:</label>
+          <div className="mb-4">
+            <label htmlFor="balance">Balance:</label>
             <input
-              type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded'
-              placeholder='Balance'
-              name='balance'
+              type="number"
+              className="block border border-grey-500 w-full p-3 rounded"
+              placeholder="Balance"
+              name="balance"
               value={balance}
               onChange={(e) => onChange(e)}
             />
           </div>
 
           {/* AMORTIZATION */}
-          <div>
-            <label htmlFor='amort'>Amortization:</label>
+          <div className="mb-4">
+            <label htmlFor="amort">Amortization:</label>
             <input
-              type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded '
-              placeholder='Amortization'
-              name='amort'
+              type="number"
+              className="block border border-grey-500 w-full p-3 rounded"
+              placeholder="Amortization"
+              name="amort"
               value={amort}
               onChange={(e) => onChange(e)}
             />
           </div>
 
           {/* TERMS */}
-          <div>
-            <label htmlFor='terms'>Terms:</label>
+          <div className="mb-4">
+            <label htmlFor="terms">Terms:</label>
             <select
-              className='block border border-grey-500 w-10/12 p-3 rounded '
-              name='terms'
-              id='terms'
+              className="block border border-grey-500 w-full p-3 rounded"
+              name="terms"
+              id="terms"
               value={terms}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={(e) => onChange(e)}
             >
-              <option value='1'>1 Month</option>
-              <option value='2'>2 Months</option>
-              <option value='3'>3 Months</option>
-              <option value='4'>4 Months</option>
-              <option value='5'>5 Months</option>
-              <option value='6'>6 Months</option>
-              <option value='12'>12 Months</option>
+              <option value="1">1 Month</option>
+              <option value="2">2 Months</option>
+              <option value="3">3 Months</option>
+              <option value="4">4 Months</option>
+              <option value="5">5 Months</option>
+              <option value="6">6 Months</option>
+              <option value="12">12 Months</option>
             </select>
           </div>
 
           {/* DATE RELEASED */}
-          <div>
-            <label htmlFor='date_released'>Date Released:</label>
+          <div className="mb-4">
+            <label htmlFor="date_released">Date Released:</label>
             <input
-              type='datetime-local'
-              className='block border border-grey-500 w-10/12 p-3 rounded '
-              placeholder='Date Released'
-              name='date_released'
+              type="datetime-local"
+              className="block border border-grey-500 w-full p-3 rounded"
+              placeholder="Date Released"
+              name="date_released"
               value={date_released}
               onChange={(e) => onChange(e)}
             />
           </div>
 
           {/* MATURITY DATE */}
-          <div>
-            <label htmlFor='maturity_date'>Maturity Date:</label>
+          <div className="mb-4">
+            <label htmlFor="maturity_date">Maturity Date:</label>
             <input
-              type='date'
-              className='block border border-grey-500 w-10/12 p-3 rounded '
-              placeholder='Maturity Date'
-              name='maturity_date'
+              type="date"
+              className="block border border-grey-500 w-full p-3 rounded"
+              placeholder="Maturity Date"
+              name="maturity_date"
               value={maturity_date}
               onChange={(e) => onChange(e)}
             />
           </div>
 
           {/* BUTTONS */}
-          <div>
+          <div className="flex flex-col sm:flex-row items-center sm:space-x-4 space-y-4 sm:space-y-0">
             <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-auto ml-auto '
-              type='submit'
+              className="text-center font-bold py-3 rounded bg-blue-500 text-white hover:bg-blue-700 focus:outline-none w-full sm:w-1/5"
+              type="submit"
             >
               Add New Loan
             </button>
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 ml-10'>
-              <Link to={`/borrower/${clientId}`}>Cancel</Link>
+            <button
+              className="text-center font-bold py-3 rounded bg-blue-500 text-white hover:bg-blue-700 focus:outline-none w-full sm:w-1/5"
+            >
+              <Link to={`/borrower/${clientId}`} className="block w-full text-center">
+                Cancel
+              </Link>
             </button>
           </div>
-
-          {/*  */}
         </form>
+
       </div>
     </div>
   );

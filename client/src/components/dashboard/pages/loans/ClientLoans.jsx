@@ -63,25 +63,22 @@ const Loans = ({ setAuth }) => {
   }, []);
 
   return (
-    <div className='flex  h-[900px] '>
-      <Sidebar />
+    <div className='flex  h-full '>
       <ToastContainer />
       {/* <GetAllLoans /> */}
       <div className='flex w-full'>
         {/* Loans Information */}
-        <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
+        <div className='w-full h-full mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
           {/* HEADER */}
           <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
             {/* TITLE */}
-            <div>
-              <h3 className='text-lg font-medium leading-6 text-white'>
-                Loans Report
-              </h3>
-              <p className='mt-1 max-w-2xl text-sm text-white'>
-                Loans summary and informations.
-              </p>
-            </div>
-
+            <div className='text-sm md:text-md text-white pl-2'>
+            <Sidebar />
+          </div>
+          <div className='flex-grow px-4 text-center'>
+            <h3 className='text-lg font-medium text-white'>Loans Report</h3>
+            <p className='text-sm text-white'>Loans summary and informations.</p>
+          </div>
             {/* BUTTON */}
 
             <div className='text-white'>
@@ -174,15 +171,15 @@ const Loans = ({ setAuth }) => {
                           {loan.status === 'Approved' ||
                           loan.status === 'Fully Paid' ||
                           loan.status === 'Disbursed' ? (
-                            <span className=' bg-green-500 text-white px-4 py-1 rounded-md'>
+                            <span className=' bg-green-500 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                               {loan.status}
                             </span>
                           ) : loan.status === 'Declined' ? (
-                            <span className=' bg-blue-400 text-white px-4 py-1 rounded-md'>
+                            <span className=' bg-blue-400 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                               {loan.status}
                             </span>
                           ) : (
-                            <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md'>
+                            <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                               {loan.status}
                             </span>
                           )}

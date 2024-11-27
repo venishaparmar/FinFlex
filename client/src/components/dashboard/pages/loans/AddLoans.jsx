@@ -116,18 +116,16 @@ const AddLoans = ({ setAuth }) => {
 
   return (
     <div className='h-[900px] flex'>
-      <Sidebar />
       <ToastContainer />
-      <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
+      <div className='w-full h-full mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded '>
         {/* HEADER */}
         <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md  '>
-          <div>
-            <h3 className='text-lg font-medium leading-6 text-white'>
-              Add New Loan
-            </h3>
-            <p className='mt-1 max-w-2xl text-sm text-white'>
-              Add a loan for a client
-            </p>
+          <div className='text-sm md:text-md text-white pl-2'>
+            <Sidebar />
+          </div>
+          <div className='flex-grow px-4 text-center'>
+            <h3 className='text-lg font-medium text-white'>Add New Loan</h3>
+            <p className='text-sm text-white'>Add a loan for a client</p>
           </div>
           {/* <ToastContainer /> */}
 
@@ -149,15 +147,17 @@ const AddLoans = ({ setAuth }) => {
 
         {/* FORM */}
         <form
-          className='mt-5 p-8 rounded border shadow-md grid grid-cols-2 border-t-4 border-t-blue-500 '
+          className='mt-5 p-6 sm:p-8 rounded border shadow-md grid grid-cols-1 sm:grid-cols-2 gap-4 border-t-4 border-t-blue-500'
           onSubmit={onSubmit}
         >
           {/* CLIENT ID */}
           <div>
-            <label htmlFor='client_id'>Client ID:</label>
+            <label htmlFor='client_id' className='block text-sm sm:text-base font-medium mb-2'>
+              Client ID:
+            </label>
             <input
               type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               placeholder='Client ID'
               name='client_id'
               value={client_id}
@@ -165,17 +165,17 @@ const AddLoans = ({ setAuth }) => {
             />
           </div>
 
-          {/* TYPE  */}
+          {/* TYPE */}
           <div>
-            <label htmlFor='type'>Type of Loan:</label>
+            <label htmlFor='type' className='block text-sm sm:text-base font-medium mb-2'>
+              Type of Loan:
+            </label>
             <select
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               name='type'
               id='type'
               value={type}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={(e) => onChange(e)}
             >
               <option value='Personal Loan'>Personal Loan</option>
               <option value='Salary Loan'>Salary Loan</option>
@@ -185,15 +185,15 @@ const AddLoans = ({ setAuth }) => {
 
           {/* STATUS */}
           <div>
-            <label htmlFor='maturity_date'>Status:</label>
+            <label htmlFor='status' className='block text-sm sm:text-base font-medium mb-2'>
+              Status:
+            </label>
             <select
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               name='status'
               id='status'
               value={status}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={(e) => onChange(e)}
             >
               <option value='Approved'>Approved</option>
               <option value='Fully Paid'>Fully Paid</option>
@@ -205,10 +205,12 @@ const AddLoans = ({ setAuth }) => {
 
           {/* GROSS LOAN */}
           <div>
-            <label htmlFor='gross_loan'>Gross Loan:</label>
+            <label htmlFor='gross_loan' className='block text-sm sm:text-base font-medium mb-2'>
+              Gross Loan:
+            </label>
             <input
               type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               placeholder='Gross Loan'
               name='gross_loan'
               value={gross_loan}
@@ -218,10 +220,12 @@ const AddLoans = ({ setAuth }) => {
 
           {/* BALANCE */}
           <div>
-            <label htmlFor='gross_loan'>Balance:</label>
+            <label htmlFor='balance' className='block text-sm sm:text-base font-medium mb-2'>
+              Balance:
+            </label>
             <input
               type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               placeholder='Balance'
               name='balance'
               value={balance}
@@ -231,10 +235,12 @@ const AddLoans = ({ setAuth }) => {
 
           {/* AMORTIZATION */}
           <div>
-            <label htmlFor='amort'>Amortization:</label>
+            <label htmlFor='amort' className='block text-sm sm:text-base font-medium mb-2'>
+              Amortization:
+            </label>
             <input
               type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               placeholder='Amortization'
               name='amort'
               value={amort}
@@ -244,15 +250,15 @@ const AddLoans = ({ setAuth }) => {
 
           {/* TERMS */}
           <div>
-            <label htmlFor='terms'>Terms:</label>
+            <label htmlFor='terms' className='block text-sm sm:text-base font-medium mb-2'>
+              Terms:
+            </label>
             <select
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               name='terms'
               id='terms'
               value={terms}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={(e) => onChange(e)}
             >
               <option value='1'>1 Month</option>
               <option value='2'>2 Months</option>
@@ -266,11 +272,12 @@ const AddLoans = ({ setAuth }) => {
 
           {/* DATE RELEASED */}
           <div>
-            <label htmlFor='date_released'>Date Released:</label>
+            <label htmlFor='date_released' className='block text-sm sm:text-base font-medium mb-2'>
+              Date Released:
+            </label>
             <input
               type='datetime-local'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
-              placeholder='Date Released'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               name='date_released'
               value={date_released}
               onChange={(e) => onChange(e)}
@@ -279,11 +286,12 @@ const AddLoans = ({ setAuth }) => {
 
           {/* MATURITY DATE */}
           <div>
-            <label htmlFor='maturity_date'>Maturity Date:</label>
+            <label htmlFor='maturity_date' className='block text-sm sm:text-base font-medium mb-2'>
+              Maturity Date:
+            </label>
             <input
               type='date'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
-              placeholder='Maturity Date'
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
               name='maturity_date'
               value={maturity_date}
               onChange={(e) => onChange(e)}
@@ -291,18 +299,19 @@ const AddLoans = ({ setAuth }) => {
           </div>
 
           {/* BUTTONS */}
-          <div className='mt-10'>
+          <div className='sm:col-span-2 flex flex-col sm:flex-row justify-end gap-4 mt-6'>
             <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-auto ml-auto '
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto'
               type='submit'
             >
               Add New Loan
             </button>
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 ml-10'>
+            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto'>
               <Link to={`/loans`}>Cancel</Link>
             </button>
           </div>
         </form>
+
       </div>
     </div>
   );
