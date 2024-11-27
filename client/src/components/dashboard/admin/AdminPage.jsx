@@ -92,47 +92,53 @@ export default function AdminPage({ setAuth }) {
           </div>
         </div>
 
-        {/* Flex container for Account Info and Admins */}
-        <div className="flex flex-col md:flex-row gap-10">
-          {/* ACCOUNT INFO */}
-          <div className="w-full md:w-1/4 h-[720px] mt-5 border rounded shadow-md border-t-4 border-t-blue-500">
-            <div className="py-5 px-5">
-              <h3 className="text-xl mb-5 border-b-2">Account Details</h3>
-              <div className="flex flex-col justify-between items-start py-5 px-5">
-                {/* USER INFO */}
-                <div>
-                  <div>
-                    <div className="flex items-center my-5">
-                      <PermIdentity className="text-lg" />
-                      <span className="ml-2.5 text-base lg:text-lg">{name}</span>
-                    </div>
-                    <div className="flex items-center my-5">
-                      <LocationOnOutlined className="text-lg" />
-                      <span className="ml-2.5 text-base lg:text-lg">{address}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center my-5">
-                    <MailOutline className="text-lg" />
-                    <div 
-    className="ml-2.5 text-base lg:text-lg w-48 overflow-hidden whitespace-nowrap text-ellipsis"
-    title={email} // Tooltip with full email
-  >
-    {email}
-  </div>
-                  </div>
+        {/* Main container for account info and admins */}
+        <div className="flex flex-col w-full mt-5 gap-5">
 
-                  <div className="flex items-center my-5">
-                    <PhoneAndroid className="text-lg" />
-                    <span className="ml-2.5 text-base lg:text-lg">{contactNumber}</span>
+          {/* Account Info Box - Horizontal Layout */}
+          <div className="w-full flex justify-center md:justify-start border rounded shadow-md border-t-4 border-t-blue-500 p-5">
+            <div className="flex flex-col items-start space-y-5 w-full">
+              <h3 className="text-xl border-b-2 w-full mb-4">Account Details</h3>
+              <div className="space-y-4 w-full">
+                {/* Name */}
+                <div className="flex items-center">
+                  <PermIdentity className="text-lg" />
+                  <span className="ml-2.5 text-base lg:text-lg">{name}</span>
+                </div>
+
+                {/* Address */}
+                <div className="flex items-center">
+                  <LocationOnOutlined className="text-lg" />
+                  <span className="ml-2.5 text-base lg:text-lg">{address}</span>
+                </div>
+
+                {/* Email */}
+                <div className="flex items-center">
+                  <MailOutline className="text-lg" />
+                  <div
+                    className="ml-2.5 text-base lg:text-lg w-full max-w-[300px] overflow-hidden text-ellipsis"
+                    title={email}  // Tooltip with full email
+                  >
+                    {email}
                   </div>
+                </div>
+                {/* Contact Number */}
+                <div className="flex items-center">
+                  <PhoneAndroid className="text-lg" />
+                  <span className="ml-2.5 text-base lg:text-lg">{contactNumber}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* OTHER ADMIN */}
-          <Admins />
+          {/* Admins Component Below Account Info */}
+          <div className="w-full">
+            <Admins />
+          </div>
+
         </div>
+
+
       </div>
     </div>
 
