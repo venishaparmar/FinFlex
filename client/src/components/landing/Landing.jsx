@@ -21,7 +21,7 @@ const Landing = () => {
         <nav className='flex justify-between max-w-screen-xl px-4 py-5 mx-auto'>
           <div className='flex items-center'>
             <h3 className='text-2xl font-extrabold tracking-tight text-blue-500 '>
-            FinFlex
+              FinFlex
             </h3>
           </div>
           <div>
@@ -30,7 +30,7 @@ const Landing = () => {
               <li>
                 <a
                   href='#'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '
+                  class='block py-2 pl-3 pr-4 rounded text-gray-700 lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl'
                 >
                   Home
                 </a>
@@ -356,7 +356,7 @@ const Landing = () => {
       </section>
 
       {/* PRICING SECTION */}
-      {/* <section id='pricing'>
+      <section id='pricing'>
         <div className='max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6'>
           <div class='max-w-screen-md mx-auto mb-8 text-center lg:mb-12'>
             <h2 class='mb-4 text-3xl font-extrabold tracking-tight text-gray-900 '>
@@ -622,9 +622,9 @@ const Landing = () => {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
-      {/* BANNER 2 */}
+      {/* BANNER 2*/}
       <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6 bg-blue-500 rounded-xl flex'>
         {/* TEXT */}
         <div className=' sm:text-lg text-center mx-auto'>
