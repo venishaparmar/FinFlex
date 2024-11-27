@@ -64,21 +64,20 @@ const Payments = ({ setAuth }) => {
   }, []);
 
   return (
-    <div className='flex  h-[900px]'>
-      <Sidebar />
+    <div className='flex  h-full'>
       <ToastContainer />
       {/* PAYMENTS */}
       <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
         {/* HEADER */}
         <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
-          <div>
-            <h3 className='text-lg font-medium leading-6 text-white'>
-              Payments Report
-            </h3>
-            <p className='mt-1 max-w-2xl text-sm text-white'>
-              Summary of Collections and information.
-            </p>
+        <div className='text-sm md:text-md text-white pl-2'>
+            <Sidebar />
           </div>
+          <div className='flex-grow px-4 text-center'>
+            <h3 className='text-lg font-medium text-white'>Payments Report</h3>
+            <p className='text-sm text-white'>Summary of Collections and information.</p>
+          </div>
+    
           {/* BUTTON */}
 
           <div className='text-white'>
@@ -113,9 +112,7 @@ const Payments = ({ setAuth }) => {
                 <th className='w-1/6 px-1 py-2 text-gray-600'>Client Name</th>
                 <th className='w-1/1 px-1 py-2 text-gray-600'>Voucher ID</th>
                 <th className='w-1/6 px-1 py-2 text-gray-600'>Amount</th>
-                <th className='w-1/6 px-1 py-2 text-gray-600'>
-                  Collection Date
-                </th>
+                <th className='w-1/6 px-1 py-2 text-gray-600'>Collection Date</th>
                 <th className='w-1/6 px-1 py-2 text-gray-600'>Collected By:</th>
                 <th className='w-1/6 px-1 py-2 text-gray-600'>New Balance</th>
                 <th className='w-1/6 px-4 py-2 text-gray-600'>Method</th>

@@ -117,19 +117,19 @@ const PaymentsInfo = () => {
                   </td>
                   <td className='border px-4 py-2 '>
                     {payment.method === 'ATM' ? (
-                      <span className=' bg-green-500 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-green-500 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {payment.method}
                       </span>
                     ) : payment.method === 'OTC' ? (
-                      <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-yellow-300 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {payment.method}
                       </span>
                     ) : payment.method === 'ONLINE BANK' ? (
-                      <span className=' bg-orange-300 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-orange-300 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {payment.method}
                       </span>
                     ) : (
-                      <span className=' bg-blue-500 text-white px-4 py-1 rounded-md'>
+                      <span className=' bg-blue-500 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                         {payment.method}
                       </span>
                     )}

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -37,7 +36,7 @@ const AddPayments = ({ loanId, balance, clientId }) => {
       }),
       {
         pending: 'Adding Payment...',
-        success: 'Added Succesfully!',
+        success: 'Added Successfully!',
         error: 'Error!',
       },
       {
@@ -94,136 +93,139 @@ const AddPayments = ({ loanId, balance, clientId }) => {
   };
 
   return (
-    <div className='flex mt-5 px-4 py-2 h-[530px] rounded border shadow-md border-t-4 border-t-blue-500 '>
+    <div className="flex mt-5 px-4 py-4 h-auto rounded border shadow-md border-t-4 border-t-blue-500">
       <ToastContainer />
 
       {/* Add Loan */}
-      <div className='w-full '>
-        <div className='flex w-full items-center justify-between border-y-2 mt-5'>
-          <h3 className='text-lg font-medium leading-6 text-gray my-2  px-1 py-2 '>
-            Loan Payment
-          </h3>
+      <div className="w-full">
+        <div className="flex w-full items-center justify-between border-b-2 pb-4 mb-4">
+          <h3 className="text-lg font-medium leading-6 text-gray-800">Loan Payment</h3>
         </div>
 
         {/* FORM */}
-        <form className='grid grid-cols-2 p-2 mt-2 ' onSubmit={onSubmit}>
-          <div className='flex w-full '>
+        <form className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4" onSubmit={onSubmit}>
+          <div className="flex flex-col sm:flex-row sm:space-x-4">
             {/* CLIENT ID */}
-
-            <div className='w-auto'>
-              <label htmlFor='client_id'>Client ID:</label>
+            <div className="flex-1">
+              <label htmlFor="client_id" className="block text-sm font-medium text-gray-700">
+                Client ID:
+              </label>
               <input
-                type='number'
-                className='block border border-grey-500 p-3 rounded mb-4 mr-5'
-                name='client_id'
+                type="number"
+                className="block w-full border border-gray-300 p-3 rounded mt-1"
+                name="client_id"
                 value={clientId}
                 disabled
               />
             </div>
 
             {/* VOUCHER */}
-            <div className='w-auto'>
-              <label htmlFor='loan_id'>Voucher:</label>
+            <div className="flex-1 mt-4 sm:mt-0">
+              <label htmlFor="loan_id" className="block text-sm font-medium text-gray-700">
+                Voucher:
+              </label>
               <input
-                type='number'
-                className='block border border-grey-500 p-3 rounded mb-4'
-                placeholder='Voucher #'
-                name='loan_id'
+                type="number"
+                className="block w-full border border-gray-300 p-3 rounded mt-1"
+                placeholder="Voucher #"
+                name="loan_id"
                 value={loanId}
                 disabled
-                onChange={(e) => onChange(e)}
               />
             </div>
           </div>
 
           {/* COLLECTION DATE */}
-          <div>
-            <label htmlFor='collection_date'>Collection Date:</label>
+          <div className="flex flex-col">
+            <label htmlFor="collection_date" className="block text-sm font-medium text-gray-700">
+              Collection Date:
+            </label>
             <input
-              type='date'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
-              placeholder='Collection Date'
-              name='collection_date'
+              type="date"
+              className="block border border-gray-300 p-3 rounded mt-1"
+              name="collection_date"
               value={collection_date}
-              onChange={(e) => onChange(e)}
+              onChange={onChange}
             />
           </div>
 
           {/* AMOUNT */}
-          <div>
-            <label htmlFor='amount'>Amount:</label>
+          <div className="flex flex-col">
+            <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+              Amount:
+            </label>
             <input
-              type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
-              placeholder='Amount'
-              name='amount'
+              type="number"
+              className="block border border-gray-300 p-3 rounded mt-1"
+              placeholder="Amount"
+              name="amount"
               value={amount}
-              onChange={(e) => onChange(e)}
+              onChange={onChange}
             />
           </div>
 
           {/* COLLECTED BY */}
-          <div>
-            <label htmlFor='collected_by'>Collected By:</label>
+          <div className="flex flex-col">
+            <label htmlFor="collected_by" className="block text-sm font-medium text-gray-700">
+              Collected By:
+            </label>
             <input
-              type='text'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
-              placeholder='Collected by'
-              name='collected_by'
+              type="text"
+              className="block border border-gray-300 p-3 rounded mt-1"
+              placeholder="Collected by"
+              name="collected_by"
               value={collected_by}
-              onChange={(e) => onChange(e)}
+              onChange={onChange}
             />
           </div>
 
           {/* NEW BALANCE */}
-          <div>
-            <label htmlFor='new_balance'>New Balances:</label>
+          <div className="flex flex-col">
+            <label htmlFor="new_balance" className="block text-sm font-medium text-gray-700">
+              New Balance:
+            </label>
             <input
-              type='number'
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
-              name='new_balance'
+              type="number"
+              className="block border border-gray-300 p-3 rounded mt-1"
+              name="new_balance"
               value={inputs.new_balance}
-              // value={new_balance}
-              onChange={(e) => onChange(e)}
+              disabled
             />
           </div>
 
           {/* METHOD */}
-          <div>
-            <label htmlFor='terms'>Method:</label>
+          <div className="flex flex-col">
+            <label htmlFor="method" className="block text-sm font-medium text-gray-700">
+              Method:
+            </label>
             <select
-              className='block border border-grey-500 w-10/12 p-3 rounded mb-4'
-              name='method'
-              id='method'
+              className="block border border-gray-300 p-3 rounded mt-1"
+              name="method"
               value={method}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
             >
-              <option value='ATM'>ATM</option>
-              <option value='OTC'>OTC</option>
-              <option value='ONLINE BANK'>ONLINE BANK</option>
-              <option value='GCASH'>GCASH</option>
+              <option value="ATM">ATM</option>
+              <option value="OTC">OTC</option>
+              <option value="ONLINE BANK">ONLINE BANK</option>
+              <option value="GCASH">GCASH</option>
             </select>
           </div>
 
           {/* BUTTONS */}
-          <div>
+          <div className="flex flex-col sm:flex-row sm:space-x-4">
             <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-auto ml-auto '
-              type='submit'
+              type="submit"
+              className="text-center font-bold py-3 rounded bg-blue-500 text-white hover:bg-blue-700 focus:outline-none my-1 sm:w-1/5 w-full"
             >
               Add Payment
             </button>
             <button
               onClick={goBack}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/5 ml-10'
+              className="text-center font-bold py-3 rounded bg-blue-500 text-white hover:bg-blue-700 focus:outline-none my-1 sm:w-1/5 w-full"
             >
               Back
             </button>
           </div>
-
-          {/*  */}
         </form>
       </div>
     </div>
