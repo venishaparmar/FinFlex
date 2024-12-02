@@ -24,7 +24,7 @@ export default function DatesWidget() {
   }, []);
 
   return (
-    <div className="w-full h-[450px] md:h-[500px]">
+    <div className="w-full h-full">
       {/* CLIENTS */}
       <div className="mt-5 p-6 md:p-8 rounded-xl border border-t-4 border-t-blue-500 cursor-pointer shadow-md">
         <h3 className="text-lg md:text-xl font-semibold mb-5 border-b-2 pb-2">Maturity Date</h3>
