@@ -1,6 +1,6 @@
 import { Logout } from '@mui/icons-material';
 import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../../../sidebar/Sidebar';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,94 +10,102 @@ const AddBorrower = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     firstname: '',
     lastname: '',
-    email: '',
+    contactNumber: '',
     address: '',
+    email: '',
     username: '',
   });
 
+  const { firstname, lastname, contactNumber, address, email, username } = inputs;
+
+  // Function to handle changes with validation
   const onChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === 'firstname' || name === 'lastname') {
+      // Allow only alphabets
+      if (/^[A-Za-z]*$/.test(value) || value === '') {
+        setInputs({ ...inputs, [name]: value });
+      }
+    } else if (name === 'contactNumber') {
+      // Allow only 10 digits
+      if (/^\d{0,10}$/.test(value)) {
+        setInputs({ ...inputs, [name]: value });
+      }
+    } else if (name === 'address') {
+      // Allow alphabets, numbers, spaces, and common punctuation
+      if (/^[A-Za-z0-9\s,.'-]*$/.test(value) || value === '') {
+        setInputs({ ...inputs, [name]: value });
+      }
+    } else {
+      // Default case for email and username
+      setInputs({ ...inputs, [name]: value });
+    }
   };
 
-  const { firstname, lastname, contactNumber, address, email, username } =
-    inputs;
+  const validateEmail = (email) => {
+    // Basic email regex
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   const addSuccessful = () => {
-    toast.promise(
-      new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 1000);
-      }),
-      {
-        pending: 'Adding Borrower...',
-        success: 'Added Succesfully!',
-        error: 'Error!',
-      },
-      {
-        autoClose: 1000,
-      }
-    );
+    toast.success('Borrower added successfully!', { autoClose: 2000 });
   };
 
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    // Validation before submission
+    if (!validateEmail(email)) {
+      toast.error('Invalid email format.');
+      return;
+    }
+    if (contactNumber.length !== 10) {
+      toast.error('Contact number must be 10 digits.');
+      return;
+    }
+
     try {
       const body = { firstname, lastname, contactNumber, address, email, username };
 
       const response = await fetch('http://localhost:8000/addClient', {
         method: 'POST',
         headers: {
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: localStorage.getItem('token'),
         },
         body: JSON.stringify(body),
       });
 
-      const parseRes = await response.json();
-
-      if (response.status === 401) {
-        // Display error toast if the user already exists
-        toast.error(parseRes.error);
-      } else {
+      if (response.ok) {
         addSuccessful();
-        setTimeout(() => navigate(-1), 3000);
+        setTimeout(() => navigate('/borrowers'), 3000);
+      } else {
+        const parseRes = await response.json();
+        toast.error(parseRes.error || 'Failed to add borrower.');
       }
     } catch (error) {
-      console.log(error.message);
+      console.error('Error:', error);
       toast.error('Server error');
     }
   };
 
-
   return (
-    <div className='flex h-[900px] '>
+    <div className='flex h-[900px]'>
       <div className='w-full h-[900px] border bg-white shadow-md rounded'>
-        <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
+        <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white rounded'>
           {/* HEADER */}
-          <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
-            {/* TITLE */}
-            <div className='text-sm md:text-md text-white pl-2'>
+          <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md'>
+            <div className='text-white'>
               <Sidebar />
             </div>
-            {/* HEADER CONTENT */}
             <div className='flex-grow px-4 text-center'>
               <h3 className='text-lg font-medium text-white'>Add New Borrower</h3>
               <p className='text-sm text-white'>Register all the required fields.</p>
             </div>
-            <ToastContainer />
-
-            {/* BUTTON */}
-
             <div className='text-white'>
-              <button
-                className=''
-                onClick={(e) => {
-                  setAuth(false);
-                }}
-              >
+              <button onClick={() => setAuth(false)}>
                 <Link to='/login'>
                   <Logout />
                 </Link>
@@ -105,88 +113,71 @@ const AddBorrower = ({ setAuth }) => {
             </div>
           </div>
 
-          <form
-            onSubmit={(e) => {
-              onSubmit(e);
-            }}
-            className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-blue-500 '
-          >
+          <form onSubmit={onSubmit} className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-blue-500'>
             {/* FIRST NAME */}
-            <label htmlFor='firstname'>First Name: </label>
+            <label htmlFor='firstname'>First Name:</label>
             <input
               type='text'
-              className='block border border-grey-500 w-full p-3 rounded mb-4'
               name='firstname'
               value={firstname}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='First Name'
+              className='block border border-grey-500 w-full p-3 rounded mb-4'
               required
             />
             {/* LAST NAME */}
-            <label htmlFor='lastname'>Last Name: </label>
+            <label htmlFor='lastname'>Last Name:</label>
             <input
               type='text'
-              className='block border border-grey-500 w-full p-3 rounded mb-4'
               name='lastname'
               value={lastname}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Last Name'
+              className='block border border-grey-500 w-full p-3 rounded mb-4'
               required
             />
             {/* CONTACT NUMBER */}
-            <label htmlFor='contactNumber'>Contact Number: </label>
+            <label htmlFor='contactNumber'>Contact Number:</label>
             <input
-              type='number'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
+              type='tel'
               name='contactNumber'
               value={contactNumber}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Contact Number'
+              className='block border border-grey-500 w-full p-3 rounded mb-4'
               required
             />
             {/* ADDRESS */}
-            <label htmlFor='address'>Address: </label>
+            <label htmlFor='address'>Address:</label>
             <input
               type='text'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
               name='address'
               value={address}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Address'
+              className='block border border-grey-500 w-full p-3 rounded mb-4'
               required
             />
-            {/* EMAIL ADDRESS */}
-            <label htmlFor='email'>Email Address: </label>
+            {/* EMAIL */}
+            <label htmlFor='email'>Email:</label>
             <input
               type='email'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
               name='email'
               value={email}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Email'
+              className='block border border-grey-500 w-full p-3 rounded mb-4'
               required
             />
             {/* USERNAME */}
-            <label htmlFor='username'>Username: </label>
+            <label htmlFor='username'>Username:</label>
             <input
               type='text'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
               name='username'
               value={username}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Username'
+              className='block border border-grey-500 w-full p-3 rounded mb-4'
               required
             />
             {/* BUTTONS */}
@@ -204,6 +195,7 @@ const AddBorrower = ({ setAuth }) => {
               </Link>
             </div>
           </form>
+          <ToastContainer />
         </div>
       </div>
     </div>
