@@ -16,14 +16,19 @@ const Payments = ({ setAuth }) => {
         headers: { Authorization: localStorage.getItem('token') },
       });
 
-      const parseRes = await response.json();
+      // Check if the response is OK (status 200)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
+      const parseRes = await response.json(); // Parse only if the response is valid
       setPayments(parseRes);
       console.log(parseRes);
     } catch (error) {
-      console.log(error.message);
+      console.error(`Error fetching payments: ${error.message}`);
     }
   };
+
 
   // Delete payment Function
 
@@ -70,14 +75,14 @@ const Payments = ({ setAuth }) => {
       <div className='w-full h-[900px] mx-auto px-8 py-8 mb-4 border bg-white shadow-md rounded'>
         {/* HEADER */}
         <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
-        <div className='text-sm md:text-md text-white pl-2'>
+          <div className='text-sm md:text-md text-white pl-2'>
             <Sidebar />
           </div>
           <div className='flex-grow px-4 text-center'>
             <h3 className='text-lg font-medium text-white'>Payments Report</h3>
             <p className='text-sm text-white'>Summary of Collections and information.</p>
           </div>
-    
+
           {/* BUTTON */}
 
           <div className='text-white'>
