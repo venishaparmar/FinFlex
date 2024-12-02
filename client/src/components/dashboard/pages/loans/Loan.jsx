@@ -167,7 +167,7 @@ const LoanInfo = () => {
                           </Link>
                         </button>
                         <button className='bg-blue-500 hover:bg-blue-700 text-white mt-2 px-3 rounded focus:outline-none focus:shadow-outline h-10 ml-2 mr-2'>
-                          <Link to={`/payment/${loan.client_id}/${loan.id}`}>
+                          <Link to={`/addPayments/${loan.client_id}/${loan.id}`}>
                             <Payment className='text-lg' />
                           </Link>
                         </button>

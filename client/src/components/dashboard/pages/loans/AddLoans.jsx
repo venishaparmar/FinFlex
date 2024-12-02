@@ -55,32 +55,42 @@ const AddLoans = ({ setAuth }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Ensure all fields are filled
+    if (
+      !client_id ||
+      !type ||
+      !status ||
+      !gross_loan ||
+      !balance ||
+      !amort ||
+      !terms ||
+      !date_released ||
+      !maturity_date
+    ) {
+      toast.error('Please fill all fields.', { autoClose: 2000 });
+      return;
+    }
+  
+    // Check if maturity date is after the release date
+    if (new Date(maturity_date) <= new Date(date_released)) {
+      toast.error('Maturity date must be after the release date.', { autoClose: 2000 });
+      return;
+    }
+  
     try {
+      // Existing form submission logic
       const timenow = new Date();
       const formatTime = (t) => {
         const x = new Date(t);
-        let hour = x.getHours();
-
-        if (hour < 10) {
-          hour = '0' + hour;
-        }
-        let min = x.getMinutes();
-        if (min < 10) {
-          min = '0' + min;
-        }
-
-        let sec = x.getSeconds();
-        if (sec < 10) {
-          sec = '0' + sec;
-        }
-
-        return hour + ':' + min + ':' + sec;
+        let hour = x.getHours().toString().padStart(2, '0');
+        let min = x.getMinutes().toString().padStart(2, '0');
+        let sec = x.getSeconds().toString().padStart(2, '0');
+        return `${hour}:${min}:${sec}`;
       };
-
-      console.log(formatTime(timenow));
-      const timestamp = date_released + ' ' + formatTime(timenow);
-
+  
+      const timestamp = `${date_released} ${formatTime(timenow)}`;
+  
       const body = {
         client_id,
         type,
@@ -92,7 +102,7 @@ const AddLoans = ({ setAuth }) => {
         date_released,
         maturity_date,
       };
-
+  
       const response = await fetch(`http://localhost:8000/loans`, {
         method: 'POST',
         headers: {
@@ -101,18 +111,21 @@ const AddLoans = ({ setAuth }) => {
         },
         body: JSON.stringify(body),
       });
-
+  
       const parseRes = await response.json();
-
       addSuccessful();
-
+  
       setTimeout(() => {
         navigate(`/Borrower/${client_id}`);
       }, 3000);
     } catch (error) {
       console.log(error.message);
+      toast.error('An error occurred while adding the loan.');
     }
   };
+  
+
+
 
   return (
     <div className='h-[900px] flex'>
