@@ -13,6 +13,7 @@ export default function Message({ email }) {
       });
 
       const parseRes = await response.json();
+
       setFullname(parseRes.firstname + ' ' + parseRes.lastname);
     } catch (error) {
       console.log(error);
@@ -39,13 +40,25 @@ export default function Message({ email }) {
 
   const sendEmail = (e) => {
     e.preventDefault();
-
+  
+    const formData = new FormData(e.target);
+    const emailData = {
+      fullname: fullname,
+      email: email,
+      subject: formData.get('subject'),
+      message: formData.get('message'),
+    };
+  
     emailjs
-      .sendForm(
-        'service_2kyejr4',
-        'Loan_Approval',
-        e.target,
-        'mDqAo3YVF6cq60oy7'
+      .send(
+        "service_63twm4c",
+        "template_x2leiin",
+        {
+          to_email: emailData.email,
+          Status: emailData.subject,
+          Message: emailData.message,
+        },
+        "PXYhasHijKmTpGuoP"
       )
       .then(
         (result) => {
@@ -55,6 +68,7 @@ export default function Message({ email }) {
           console.log(error.text);
         }
       );
+    
     addSuccessful();
   };
 
@@ -74,7 +88,7 @@ export default function Message({ email }) {
               <div className="w-full mb-4 md:mb-0">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="fullname"
+                  htmlForm="fullname"
                 >
                   Full Name:
                 </label>
