@@ -14,59 +14,89 @@ import {
 } from '@mui/icons-material';
 
 const Landing = () => {
+  const [menuOpen, setMenuOpen] = React.useState(false);
   return (
     <div className=''>
       {/* NAVBAR */}
       <div className='sticky top-0 w-full bg-white'>
         <nav className='flex justify-between max-w-screen-xl px-4 py-5 mx-auto'>
+          {/* Logo */}
           <div className='flex items-center'>
-            <h3 className='text-2xl font-extrabold tracking-tight text-blue-500 '>
+            <h3 className='text-2xl font-extrabold tracking-tight text-blue-500'>
               FinFlex
             </h3>
           </div>
-          <div>
-            <ul class='flex flex-col font-medium lg:flex-row lg:space-x-8 lg:mt-0 items-center'>
-              {/* HOME */}
-              <li>
-                <a
-                  href='#'
-                  class='block py-2 pl-3 pr-4 rounded text-gray-700 lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl'
-                >
-                  Home
-                </a>
-              </li>
 
-              {/* ABOUT */}
-              <li>
-                <a
-                  href='#about'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '
-                >
-                  About
-                </a>
-              </li>
-              {/* 
-              <li>
-                <a
-                  href='#pricing'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-x '
-                >
-                  Pricing
-                </a>
-              </li> */}
+          {/* Hamburger Menu Button */}
+          <button
+            className='block md:hidden text-gray-700'
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            {/* Three-line Icon */}
+            <svg
+              className='w-6 h-6'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M4 6h16M4 12h16m-7 6h7'
+              ></path>
+            </svg>
+          </button>
 
-              {/* CONTACT */}
-              <li>
-                <a
-                  href='#contacts'
-                  class='block py-2 pl-3 pr-4   rounded text-gray-700    lg:hover:text-white lg:hover:bg-blue-500 font-light lg:text-xl '>
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/* Menu Items */}
+          <ul
+            className={`${menuOpen ? 'hidden' : 'block'
+              }  font-medium md:flex-row md:space-x-8 md:mt-0 items-center block md:flex flex-col`}
+          >
+            {/* HOME */}
+            <li>
+              <a
+                href='#'
+                className='block py-2 pl-3 pr-4 rounded text-gray-700 hover:text-white hover:bg-blue-500 font-light text-xl'
+              >
+                Home
+              </a>
+            </li>
+
+            {/* ABOUT */}
+            <li>
+              <a
+                href='#about'
+                className='block py-2 pl-3 pr-4 rounded text-gray-700 hover:text-white hover:bg-blue-500 font-light text-xl'
+              >
+                About
+              </a>
+            </li>
+
+            {/* PRICING */}
+            <li>
+              <a
+                href='#pricing'
+                className='block py-2 pl-3 pr-4 rounded text-gray-700 hover:text-white hover:bg-blue-500 font-light text-xl'
+              >
+                Pricing
+              </a>
+            </li>
+
+            {/* CONTACT */}
+            <li>
+              <a
+                href='#contacts'
+                className='block py-2 pl-3 pr-4 rounded text-gray-700 hover:text-white hover:bg-blue-500 font-light text-xl'
+              >
+                Contact
+              </a>
+            </li>
+          </ul>
         </nav>
       </div>
+
 
       {/* HERO SECTION */}
       <section>
@@ -115,42 +145,37 @@ const Landing = () => {
           </div>
 
           {/* FEATURED ITEMS */}
-          <div className='flex gap-10 justify-between'>
+          <div className='block md:flex gap-0 md:gap-10 justify-between'>
             {/* FEATURE 1 : LOAN MGT */}
-            <div className='flex flex-col w-80 p-10  border rounded-xl hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer'>
+            <div className='flex flex-col w-full md:w-80 p-10 border rounded-xl hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer mb-10 md:mb-0'>
               <div className=''>
-                <CreditScore className=' w-full text-blue-500 rounded-full h-full text-2xl mb-2' />
+                <CreditScore className='w-full text-blue-500 rounded-full h-full text-2xl mb-2' />
               </div>
               <h4 className='text-md font-semibold mb-1'>Loan Management</h4>
               <p>
-                We will provide management for your loan so that you can track
-                them easily
+                We will provide management for your loan so that you can track them easily.
               </p>
             </div>
 
             {/* FEATURE 2 : CLIENT MGT */}
-            <div className='flex flex-col w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer'>
+            <div className='flex flex-col w-full md:w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer mb-10 md:mb-0'>
               <div className=''>
-                <PermIdentity className=' w-full text-blue-500 rounded-full h-full text-2xl mb-2' />
+                <PermIdentity className='w-full text-blue-500 rounded-full h-full text-2xl mb-2' />
               </div>
               <h4 className='text-md font-semibold mb-1'>Client Management</h4>
               <p>
-                Offers client management plus managers can now email their
-                clients to notify them.
+                Offers client management plus managers can now email their clients to notify them.
               </p>
             </div>
 
             {/* FEATURE 3 : PAYMENT MGT */}
-            <div className='flex flex-col w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer '>
+            <div className='flex flex-col w-full md:w-80 p-10 rounded-xl border hover:shadow-xl hover:bg-blue-500 hover:text-white cursor-pointer'>
               <div className=''>
-                <ReceiptLong className=' w-full text-blue-500 rounded-full h-full text-2xl mb-2 ' />
+                <ReceiptLong className='w-full text-blue-500 rounded-full h-full text-2xl mb-2' />
               </div>
-              <h4 className='text-md font-semibold mb-1'>
-                Payments Management
-              </h4>
+              <h4 className='text-md font-semibold mb-1'>Payments Management</h4>
               <p>
-                Avoid payment delays by notifying managers about their client's
-                loan.
+                Avoid payment delays by notifying managers about their client's loan.
               </p>
             </div>
           </div>
@@ -158,14 +183,14 @@ const Landing = () => {
       </section>
 
       {/* BANNER SECTION */}
-      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6 bg-blue-500 rounded-xl flex'>
+      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-12 lg:px-6 bg-blue-500 rounded-xl flex '>
         {/* TEXT */}
-        <div className='text-gray-500 sm:text-lg text-center mx-auto'>
+        <div className='text-gray-500 sm:text-lg text-center mx-auto mt-8 md:mt-0'>
           {/* TITLE */}
           <h2 className='mb-5 text-3xl font-bold tracking-tight text-white'>
-            We will never leave your side, <br /> but will leave you a smile.{' '}
+            We will never leave your side, <br className='hidden md:block' />  but will leave you a smile.{' '}
           </h2>
-          <button className='bg-gray-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+          <button className='bg-gray-800 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5 mb-8 md:mb-0'>
             <Link to='/register'>Get Started</Link>
           </button>
         </div>
@@ -625,9 +650,9 @@ const Landing = () => {
       </section>
 
       {/* BANNER 2*/}
-      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-24 lg:px-6 bg-blue-500 rounded-xl flex'>
+      <section className='max-w-screen-xl px-4 mx-auto space-y-12 lg:space-y-20 lg:py-12 lg:px-6 bg-blue-500 rounded-xl flex'>
         {/* TEXT */}
-        <div className=' sm:text-lg text-center mx-auto'>
+        <div className=' sm:text-lg text-center mx-auto mt-10 md:mt-0'>
           {/* TITLE */}
           <h2 className='mb-4 text-3xl font-extrabold leading-tight tracking-tight text-white'>
             Start your free trial today
@@ -635,7 +660,7 @@ const Landing = () => {
           <p class='mb-6 font-light text-white md:text-lg'>
             Try FinFlex Platform for 30 days. No credit card required.
           </p>
-          <button className='bg-gray-800 hover:bg-blue-900 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5'>
+          <button className='bg-gray-800 hover:bg-blue-900 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5 mb-10 md:mb-0'>
             <Link to='/register'>Free Trial for 30 days</Link>
           </button>
         </div>
