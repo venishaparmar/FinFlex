@@ -74,6 +74,18 @@ app.get('/allAdmins', auth, async (req, res) => {
   }
 });
 
+app.delete('/admins/:id', async (req, res) => {
+  try {
+    const id = req.params['id'];
+    await pool.query(`DELETE FROM admin WHERE id = ?`, [id]); // Use parameterized query
+
+    res.json({ msg: `Deleted admin with an id of ${id}` });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'An error occurred while deleting the admin.' });
+  }
+});
+
 app.get('/profile', auth, async (req, res) => {
   try {
     res.json(req.user);
@@ -147,7 +159,7 @@ app.post('/addClient', async (req, res) => {
 
     const newClient = await query(
       `INSERT INTO clients(firstname, lastname, contactnumber, address, email, username) 
-       VALUES (?, ?, ?, ?, ?, ?)`, 
+       VALUES (?, ?, ?, ?, ?, ?)`,
       [firstname, lastname, contactNumber, address, email, username]
     );
 
@@ -165,7 +177,7 @@ app.patch('/clients/:id', async (req, res) => {
 
     const updateClient = await query(
       `UPDATE clients SET firstname = ?, lastname = ?, contactNumber = ?, address = ?, email = ? 
-       WHERE id = ?`, 
+       WHERE id = ?`,
       [firstname, lastname, contactNumber, address, email, id]
     );
 
@@ -475,7 +487,7 @@ app.post('/loans/:id', auth, async (req, res) => {
 
     const newLoan = await query(
       `INSERT INTO loans (client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date) 
-      VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?)`, 
+      VALUES (?, ?, 'Pending', ?, ?, ?, ?, ?, ?)`,
       [id, type, balance, gross_loan, amort, terms, date_released, maturity_date]
     );
 
@@ -503,7 +515,7 @@ app.post('/loans/', auth, async (req, res) => {
 
     const newLoan = await query(
       `INSERT INTO loans (client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [client_id, type, status, balance, gross_loan, amort, terms, date_released, maturity_date]
     );
 
@@ -531,7 +543,7 @@ app.patch('/loans/:id', auth, async (req, res) => {
 
     const updateLoan = await query(
       `UPDATE loans SET type = ?, balance = ?, gross_loan = ?, amort = ?, terms = ?, date_released = ?, maturity_date = ?, status = ? 
-      WHERE id = ?`, 
+      WHERE id = ?`,
       [type, balance, gross_loan, amort, terms, date_released, maturity_date, status, id]
     );
 
@@ -549,7 +561,7 @@ app.patch('/loan/:id', auth, async (req, res) => {
 
     const updateLoan = await query(
       `UPDATE loans SET balance = payments.new_balance 
-      FROM payments WHERE payments.loan_id = ?`, 
+      FROM payments WHERE payments.loan_id = ?`,
       [id]
     );
 
@@ -576,9 +588,147 @@ app.delete('/loans/:id', auth, async (req, res) => {
   }
 });
 
+//* PAYMENTS
+// View all payments
+app.get('/allPayments', auth, async (req, res) => {
+  try {
+    const getPayments = await query(
+      `SELECT c.firstname, c.lastname, p.id, p.amount, p.collection_date, p.new_balance, p.collected_by, p.method, p.loan_id 
+       FROM payments AS p 
+       INNER JOIN clients AS c 
+       ON p.client_id = c.id`
+    );
+
+    res.json(getPayments || []);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 
+// PAYMENT W. CLIENT ID AND LOAN ID
+app.get('/payment/:client/:loan', auth, async (req, res) => {
+  try {
+    const client_id = req.params['client'];
+    const loan_id = req.params['loan'];
 
+    const getPayments = await pool.query(
+      `SELECT * FROM payments WHERE client_id = ${client_id} AND loan_id = ${loan_id};`
+    );
+
+    res.json(getPayments);
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+app.post('/payments/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+
+    const {
+      amount,
+      collection_date,
+      collected_by,
+      new_balance,
+      method,
+      client_id,
+    } = req.body;
+
+    // Use parameterized queries for safety
+    const query = `
+      INSERT INTO PAYMENTS 
+      (amount, collection_date, collected_by, new_balance, method, client_id, loan_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    // Execute query with parameters
+    const [result] = await pool.execute(query, [
+      amount,
+      collection_date,
+      collected_by,
+      new_balance,
+      method,
+      client_id,
+      id,
+    ]);
+
+    res.json({
+      id: result.insertId, // MySQL returns the auto-incremented ID
+      amount,
+      collection_date,
+      collected_by,
+      new_balance,
+      method,
+      client_id,
+      loan_id: id,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('An error occurred.');
+  }
+});
+
+app.post('/loans/', auth, async (req, res) => {
+  try {
+    const {
+      amount,
+      collection_date,
+      collected_by,
+      new_balance,
+      method,
+      loan_id,
+    } = req.body;
+
+    const query = `
+      INSERT INTO payments 
+      (amount, collection_date, collected_by, new_balance, method, loan_id) 
+      VALUES (?, ?, ?, ?, ?, ?)`;
+
+    // Execute the query with parameterized values
+    const [result] = await pool.execute(query, [
+      amount,
+      collection_date,
+      collected_by,
+      new_balance,
+      method,
+      loan_id,
+    ]);
+
+    // MySQL does not support `RETURNING *`, so fetch the inserted row if needed
+    res.json({
+      id: result.insertId, // Inserted row ID
+      amount,
+      collection_date,
+      collected_by,
+      new_balance,
+      method,
+      loan_id,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('An error occurred.');
+  }
+});
+
+// View all client payments to single loan
+app.get('/payments/:id', auth, async (req, res) => {
+  try {
+    const id = req.params['id'];
+
+    // Use parameterized queries to prevent SQL Injection
+    const [getPayments] = await pool.query(
+      `SELECT * FROM payments WHERE client_id = ?;`, 
+      [id]
+    );
+
+    // Send the result as JSON
+    res.json(getPayments);
+  } catch (error) {
+    console.error('Error in /payments/:id:', error.message);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 
 app.listen(PORT, () => {
