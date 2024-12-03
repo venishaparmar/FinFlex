@@ -9,36 +9,31 @@ const Login = ({ setAuth }) => {
     username: '',
     password: '',
   });
-  const [loading, setLoading] = useState(false); // New state for loading indicator
+  const [loading, setLoading] = useState(false);
 
-  // Handling input changes
   const onChange = (e) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
-  // Function to handle successful login
   const loginSuccessful = () => {
     toast.success('Logged in Successfully!', { autoClose: 1500, position: 'top-right' });
   };
 
-  // Function to handle failed login
   const loginFailed = (message) => {
     toast.error(message || 'Login failed. Please try again!', { autoClose: 2500, position: 'top-right' });
   };
 
   const { username, password } = inputs;
 
-  // Form submission handler
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // Simple input validation
     if (!username || !password) {
       loginFailed('Both fields are required!');
       return;
     }
 
-    setLoading(true); // Show loading indicator
+    setLoading(true);
     try {
       const body = { username, password };
 
@@ -51,7 +46,9 @@ const Login = ({ setAuth }) => {
       const parseRes = await response.json();
 
       if (response.ok && parseRes.token) {
-        localStorage.setItem('token', parseRes.token);
+        // Store the token in a cookie
+        document.cookie = `token=${parseRes.token}; path=/; max-age=7200;`; // 1-day expiration (86400 seconds)
+
         loginSuccessful();
         setTimeout(() => setAuth(true), 1500);
       } else {
@@ -61,7 +58,7 @@ const Login = ({ setAuth }) => {
       loginFailed('An error occurred. Please try again later.');
       console.error('Login Error:', error.message);
     } finally {
-      setLoading(false); // Hide loading indicator
+      setLoading(false);
     }
   };
 
@@ -70,15 +67,10 @@ const Login = ({ setAuth }) => {
       <ToastContainer />
       <div>
         <div className='flex justify-between items-center px-8 pt-6 pb-2'>
-          {/* GREETINGS */}
           <div>
             <h1 className='text-xl font-semibold'>Welcome back</h1>
-            <small className='text-gray-400'>
-              Welcome back! Please enter your details
-            </small>
+            <small className='text-gray-400'>Welcome back! Please enter your details</small>
           </div>
-
-          {/* BACK ARROW */}
           <div className='ml-8'>
             <Link to='/'>
               <ArrowBackIosNew />
@@ -119,9 +111,9 @@ const Login = ({ setAuth }) => {
             <button
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full'
               type='submit'
-              disabled={loading} // Disable button when loading
+              disabled={loading}
             >
-              {loading ? 'Signing In...' : 'Sign In'} {/* Loading indicator */}
+              {loading ? 'Signing In...' : 'Sign In'}
             </button>
           </div>
         </form>

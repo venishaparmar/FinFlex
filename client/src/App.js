@@ -28,25 +28,37 @@ import AddAdmin from './components/dashboard/admin/AddAdmin';
 import EmailPage from './components/dashboard/pages/messages/EmailPage';
 
 function App() {
+  
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check localStorage for auth status on app load
-  useEffect(() => {
-    const authStatus = localStorage.getItem("isAuthenticated");
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-    }
-  }, []);
-
-  // Update auth state and localStorage
-  const setAuth = (boolean) => {
-    setIsAuthenticated(boolean);
-    if (boolean) {
-      localStorage.setItem("isAuthenticated", "true");
-    } else {
-      localStorage.removeItem("isAuthenticated");
-    }
-  };
+    // Function to get the value of a specific cookie by name
+    const getCookie = (name) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+      return null;
+    };
+  
+    // Check cookie for auth status on app load
+    useEffect(() => {
+      const authStatus = getCookie('isAuthenticated');
+      if (authStatus === 'true') {
+        setIsAuthenticated(true);
+      }
+    }, []);
+  
+    // Update auth state and set cookie
+    const setAuth = (boolean) => {
+      setIsAuthenticated(boolean);
+      if (boolean) {
+        // Set the cookie to expire in 1 day (86400 seconds)
+        document.cookie = `isAuthenticated=true; path=/; max-age=86400;`;
+      } else {
+        // Delete the cookie by setting its expiration date to the past
+        document.cookie = `isAuthenticated=; path=/; max-age=0;`;
+      }
+    };
+  
 
   return (
     <Router>
