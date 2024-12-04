@@ -11,13 +11,20 @@ const PaymentsInfo = () => {
 
   const clientId = location.pathname.split('/')[2];
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   const GetPayments = async () => {
     try {
       const response = await fetch(
         `http://localhost:8000/payments/${clientId}`,
         {
           method: 'GET',
-          headers: { Authorization: localStorage.getItem('token') },
+          headers: { Authorization: getCookie('token') },
         }
       );
 
@@ -52,7 +59,7 @@ const PaymentsInfo = () => {
     try {
       await fetch(`http://localhost:8000/payment/${id}`, {
         method: 'DELETE',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
       deleteNotif();
       setTimeout(() => {

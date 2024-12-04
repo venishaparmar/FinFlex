@@ -22,11 +22,18 @@ const EditLoan = ({ setAuth }) => {
     maturity_date: '',
   });
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   const GetLoan = async () => {
     try {
       const response = await fetch(`http://localhost:8000/loan/${loanId}`, {
         method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
       const parseRes = await response.json();
 
@@ -90,7 +97,7 @@ const EditLoan = ({ setAuth }) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token'),
+          Authorization: getCookie('token'),
         },
         body: JSON.stringify(body),
       });

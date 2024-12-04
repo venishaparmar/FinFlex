@@ -9,11 +9,19 @@ import Sidebar from '../../../sidebar/Sidebar';
 const Payments = ({ setAuth }) => {
   const [payments, setPayments] = useState([]);
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+  
+
   const GetPayments = async () => {
     try {
       const response = await fetch('http://localhost:8000/allPayments', {
         method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
 
       // Check if the response is OK (status 200)
@@ -49,11 +57,13 @@ const Payments = ({ setAuth }) => {
       }
     );
   };
+  
+
   async function deletePayment(id) {
     try {
       await fetch(`http://localhost:8000/loans/${id}`, {
         method: 'DELETE',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
       deleteNotif();
       setTimeout(() => {

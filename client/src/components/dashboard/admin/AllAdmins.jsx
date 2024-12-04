@@ -6,11 +6,18 @@ import { DeleteForever } from '@mui/icons-material';
 const Admins = ({ setAuth }) => {
   const [admins, setAdmins] = useState([]);
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   const getAdmins = async () => {
     try {
       const response = await fetch('http://localhost:8000/allAdmins', {
         method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
       const parseRes = await response.json();
       setAdmins(parseRes);
@@ -41,7 +48,7 @@ const Admins = ({ setAuth }) => {
     try {
       await fetch(`http://localhost:8000/admins/${id}`, {
         method: 'DELETE',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
       deleteNotif();
       setTimeout(() => {

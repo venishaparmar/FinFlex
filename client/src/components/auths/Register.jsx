@@ -49,15 +49,21 @@ const Register = ({ setAuth }) => {
       });
 
       const parseRes = await response.json();
+      const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+      };
 
-      // if (parseRes.token) {
-      //   localStorage.setItem('token', parseRes.token);
-      //   console.log(parseRes.token);
-      //   setAuth(true);
-      // } else {
-      //   setAuth(false);
-      //   console.log('Something wrong');
-      // }
+      if (parseRes.token) {
+        getCookie('token', parseRes.token);
+        console.log(parseRes.token);
+        setAuth(true);
+      } else {
+        setAuth(false);
+        console.log('Something wrong');
+      }
     } catch (error) {
       console.log(error.message);
     }

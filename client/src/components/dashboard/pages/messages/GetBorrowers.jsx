@@ -7,11 +7,18 @@ const GetBorrowers = ({ setAuth }) => {
   const [clients, setClients] = useState([]);
   const [emails, setEmail] = useState('');
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   const getClients = async () => {
     try {
       const response = await fetch('http://localhost:8000/allClients', {
         method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
       const parseRes = await response.json();
       setClients(parseRes);

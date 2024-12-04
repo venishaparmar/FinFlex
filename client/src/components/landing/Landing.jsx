@@ -400,7 +400,7 @@ const Landing = () => {
                 Best option for personal use & for your next project.
               </p>
               <div class='flex items-baseline justify-center my-8'>
-                <span class='mr-2 text-5xl font-extrabold'>₱1,5k</span>
+                <span class='mr-2 text-5xl font-extrabold'>₹ 15k</span>
                 <span class='text-gray-500 dark:text-gray-400'>/month</span>
               </div>
               <ul role='list' class='mb-8 space-y-4 text-left'>
@@ -484,7 +484,7 @@ const Landing = () => {
                 Relevant for multiple users, extended & premium support.
               </p>
               <div class='flex items-baseline justify-center my-8'>
-                <span class='mr-2 text-5xl font-extrabold'>₱5.4k</span>
+                <span class='mr-2 text-5xl font-extrabold'>₹35k</span>
                 <span class='text-gray-500 dark:text-gray-400'>/month</span>
               </div>
               <ul role='list' class='mb-8 space-y-4 text-left'>
@@ -568,7 +568,7 @@ const Landing = () => {
                 Best for large scale users and extended redistribution rights.
               </p>
               <div class='flex items-baseline justify-center my-8'>
-                <span class='mr-2 text-5xl font-extrabold'>₱27.4k</span>
+                <span class='mr-2 text-5xl font-extrabold'>₹70k</span>
                 <span class='text-gray-500 dark:text-gray-400'>/month</span>
               </div>
               <ul role='list' class='mb-8 space-y-4 text-left'>

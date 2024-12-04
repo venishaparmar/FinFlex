@@ -56,7 +56,7 @@ export default function ApprovalWidget() {
                     return (
                       <tr key={index}>
                         <td className="border px-4 py-2 bg-gray-50 text-sm md:text-base">
-                          ₱ {loan.gross_loan}
+                        ₹ {loan.gross_loan}
                         </td>
                         <td className="border px-4 py-2 text-sm md:text-base">
                           <span className="bg-yellow-300 text-white px-4 py-1 rounded-md">

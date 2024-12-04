@@ -75,7 +75,13 @@ export default function Home({ setAuth }) {
               {/* Logout Button */}
               <button
                 className='text-white hover:scale-105'
-                onClick={() => setAuth(false)}
+                onClick={() => {
+                  // Clear the token cookie
+                  document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+                  // Update the authentication state
+                  setAuth(false);
+                }}
               >
                 <Link to='/login'>
                   <Logout fontSize='large' className='text-sm md:text-lg text-white' />

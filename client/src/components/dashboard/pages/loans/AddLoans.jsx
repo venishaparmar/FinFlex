@@ -102,12 +102,19 @@ const AddLoans = ({ setAuth }) => {
         date_released,
         maturity_date,
       };
-  
+      
+      const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+      };
+
       const response = await fetch(`http://localhost:8000/loans`, {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
-          Authorization: localStorage.getItem('token'),
+          Authorization: getCookie('token'),
         },
         body: JSON.stringify(body),
       });

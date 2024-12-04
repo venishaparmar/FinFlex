@@ -45,6 +45,13 @@ const AddPayments = ({ loanId, balance, clientId }) => {
     );
   };
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -62,7 +69,7 @@ const AddPayments = ({ loanId, balance, clientId }) => {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
-          Authorization: localStorage.getItem('token'),
+          Authorization: getCookie('token'),
         },
         body: JSON.stringify(body),
       });

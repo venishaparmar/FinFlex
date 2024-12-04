@@ -12,7 +12,7 @@ const Loans = ({ setAuth }) => {
     try {
       const response = await fetch('http://localhost:8000/allLoans/', {
         method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
 
       const parseRes = await response.json();
@@ -43,11 +43,18 @@ const Loans = ({ setAuth }) => {
     );
   };
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   async function deleteLoan(id) {
     try {
       await fetch(`http://localhost:8000/loans/${id}`, {
         method: 'DELETE',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
 
       deleteNotif();

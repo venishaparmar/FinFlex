@@ -19,11 +19,18 @@ export default function AdminPage({ setAuth }) {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   const getAdmin = async () => {
     try {
       const response = await fetch(`http://localhost:8000/profile`, {
         method: 'GET',
-        headers: { Authorization: localStorage.getItem('token') },
+        headers: { Authorization: getCookie('token') },
       });
 
       const parseRes = await response.json();

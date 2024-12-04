@@ -18,6 +18,13 @@ const AddBorrower = ({ setAuth }) => {
 
   const { firstname, lastname, contactNumber, address, email, username } = inputs;
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
   // Function to handle changes with validation
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -73,7 +80,7 @@ const AddBorrower = ({ setAuth }) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: localStorage.getItem('token'),
+          Authorization: getCookie('token'),
         },
         body: JSON.stringify(body),
       });
