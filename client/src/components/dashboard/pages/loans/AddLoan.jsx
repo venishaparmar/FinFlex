@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Logout } from '@mui/icons-material';
+import LogoutButton from '../../../LogoutButton';
 import { ToastContainer, toast } from 'react-toastify';
 
 import Sidebar from '../../../sidebar/Sidebar';
@@ -113,16 +113,8 @@ const AddLoan = ({ setAuth }) => {
 
           {/* BUTTON */}
           <div className="text-white">
-            <button
-              className=""
-              onClick={(e) => {
-                setAuth(false);
-              }}
-            >
-              <Link to="/login">
-                <Logout />
-              </Link>
-            </button>
+            {/* Logout Button */}
+            <LogoutButton setAuth={setAuth} />
           </div>
         </div>
 

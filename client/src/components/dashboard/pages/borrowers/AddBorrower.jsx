@@ -1,8 +1,8 @@
-import { Logout } from '@mui/icons-material';
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../../../sidebar/Sidebar';
-
+import LogoutButton from '../../../LogoutButton';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -112,11 +112,8 @@ const AddBorrower = ({ setAuth }) => {
               <p className='text-sm text-white'>Register all the required fields.</p>
             </div>
             <div className='text-white'>
-              <button onClick={() => setAuth(false)}>
-                <Link to='/login'>
-                  <Logout />
-                </Link>
-              </button>
+              {/* Logout Button */}
+              <LogoutButton setAuth={setAuth} />
             </div>
           </div>
 

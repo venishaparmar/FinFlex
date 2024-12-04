@@ -1,10 +1,10 @@
-import { Logout } from '@mui/icons-material';
 import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../sidebar/Sidebar';
+import LogoutButton from '../../LogoutButton';
 
 const AddAdmin = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
@@ -82,38 +82,27 @@ const AddAdmin = ({ setAuth }) => {
   };
 
   return (
-    <div className='flex h-[900px] '>
-      <Sidebar />
+    <div className='flex h-full '>
       <ToastContainer />
 
-      <div className='w-full h-[900px] border bg-white shadow-md rounded'>
+      <div className='w-full h-full border bg-white shadow-md rounded'>
+        
         <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
           {/* HEADER */}
           <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
             {/* TITLE */}
-            <div>
-              <h3 className='text-lg font-medium leading-6 text-white'>
-                Add New Admin
-              </h3>
-              <p className='mt-1 max-w-2xl text-sm text-white'>
-                Register all the required fields.
-              </p>
+            <div className='text-white'>
+              <Sidebar />
+            </div>
+            <div className='flex-grow px-4 text-center'>
+              <h3 className='text-lg font-medium text-white'>Add New Admin</h3>
+              <p className='text-sm text-white'>Register all the required fields.</p>
             </div>
             <ToastContainer />
 
-            {/* BUTTON */}
-
             <div className='text-white'>
-              <button
-                className=''
-                onClick={(e) => {
-                  setAuth(false);
-                }}
-              >
-                <Link to='/login'>
-                  <Logout />
-                </Link>
-              </button>
+              {/* Logout Button */}
+              <LogoutButton setAuth={setAuth} />
             </div>
           </div>
 

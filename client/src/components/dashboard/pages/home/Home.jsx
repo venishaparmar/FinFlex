@@ -3,7 +3,8 @@ import Sidebar from '../../../sidebar/Sidebar';
 import BotWidget from './bottom/BotWidget';
 import TopWidget from './top/TopWidget';
 import { Link } from 'react-router-dom';
-import { Logout, PermIdentity } from '@mui/icons-material';
+import {  PermIdentity } from '@mui/icons-material';
+import LogoutButton from '../../../LogoutButton';
 
 export default function Home({ setAuth }) {
   const [name, setName] = useState('');
@@ -73,20 +74,7 @@ export default function Home({ setAuth }) {
               </Link>
 
               {/* Logout Button */}
-              <button
-                className='text-white hover:scale-105'
-                onClick={() => {
-                  // Clear the token cookie
-                  document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-                  // Update the authentication state
-                  setAuth(false);
-                }}
-              >
-                <Link to='/login'>
-                  <Logout fontSize='large' className='text-sm md:text-lg text-white' />
-                </Link>
-              </button>
+              <LogoutButton setAuth={setAuth} />
             </div>
           </div>
         </div>

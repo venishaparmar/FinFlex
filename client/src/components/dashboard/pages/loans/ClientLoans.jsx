@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import Sidebar from '../../../sidebar/Sidebar';
-import { DeleteForever, Edit, Update, Logout } from '@mui/icons-material';
+import { DeleteForever, Edit } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import LogoutButton from '../../../LogoutButton';
 
 const Loans = ({ setAuth }) => {
   const [loans, setLoans] = useState([]);
@@ -89,16 +90,8 @@ const Loans = ({ setAuth }) => {
             {/* BUTTON */}
 
             <div className='text-white'>
-              <button
-                className=''
-                onClick={(e) => {
-                  setAuth(false);
-                }}
-              >
-                <Link to='/login'>
-                  <Logout />
-                </Link>
-              </button>
+              {/* Logout Button */}
+              <LogoutButton setAuth={setAuth} />
             </div>
           </div>
 

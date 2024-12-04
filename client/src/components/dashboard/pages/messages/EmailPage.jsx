@@ -1,8 +1,7 @@
 import React from 'react';
 import Sidebar from '../../../sidebar/Sidebar';
 import GetBorrowers from './GetBorrowers';
-import { Link } from 'react-router-dom';
-import { Logout } from '@mui/icons-material';
+import LogoutButton from '../../../LogoutButton';
 
 export default function EmailPage({ setAuth }) {
   return (
@@ -23,16 +22,8 @@ export default function EmailPage({ setAuth }) {
           {/* BUTTON */}
 
           <div className='text-white'>
-            <button
-              className=''
-              onClick={(e) => {
-                setAuth(false);
-              }}
-            >
-              <Link to='/login'>
-                <Logout />
-              </Link>
-            </button>
+            {/* Logout Button */}
+            <LogoutButton setAuth={setAuth} />
           </div>
         </div>
         <GetBorrowers />

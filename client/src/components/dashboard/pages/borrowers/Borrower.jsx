@@ -5,11 +5,10 @@ import {
   MailOutline,
   PermIdentity,
   PhoneAndroid,
-  Publish,
-  Logout,
 } from '@mui/icons-material';
 import Sidebar from '../../../sidebar/Sidebar';
 import LoanInfo from '../loans/Loan';
+import LogoutButton from '../../../LogoutButton';
 
 export default function Borrower({ setAuth }) {
   const [name, setName] = useState('');
@@ -72,16 +71,8 @@ export default function Borrower({ setAuth }) {
             <p className='text-sm text-white'>All client's information</p>
           </div>
           <div className='text-white'>
-            <button
-              className=''
-              onClick={() => {
-                setAuth(false);
-              }}
-            >
-              <Link to='/login'>
-                <Logout />
-              </Link>
-            </button>
+            {/* Logout Button */}
+            <LogoutButton setAuth={setAuth} />
           </div>
         </div>
 

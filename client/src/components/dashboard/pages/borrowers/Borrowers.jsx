@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { DeleteForever, VisibilityOutlined, Logout } from '@mui/icons-material';
+import { DeleteForever, VisibilityOutlined } from '@mui/icons-material';
 import { toast, ToastContainer } from 'react-toastify';
+import LogoutButton from '../../../LogoutButton';
 
 import Sidebar from '../../../sidebar/Sidebar';
 
@@ -77,11 +78,8 @@ const Borrowers = ({ setAuth }) => {
             <p className='text-sm text-white'>All clients registered</p>
           </div>
           <div className='text-white'>
-            <button onClick={() => setAuth(false)}>
-              <Link to='/login'>
-                <Logout className='text-2xl md:text-3xl' />
-              </Link>
-            </button>
+            {/* Logout Button */}
+            <LogoutButton setAuth={setAuth} />
           </div>
         </div>
 

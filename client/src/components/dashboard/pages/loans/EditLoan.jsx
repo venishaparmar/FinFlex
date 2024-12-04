@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Logout } from '@mui/icons-material';
+import LogoutButton from '../../../LogoutButton';
 import { toast, ToastContainer } from 'react-toastify';
 
 import Sidebar from '../../../sidebar/Sidebar';
@@ -139,12 +139,8 @@ const EditLoan = ({ setAuth }) => {
             <p className="text-sm text-white">Edit and update your loan</p>
           </div>
           <div className="text-white">
-            <button
-              onClick={() => setAuth(false)}
-              className="focus:outline-none"
-            >
-              <Logout />
-            </button>
+            {/* Logout Button */}
+            <LogoutButton setAuth={setAuth} />
           </div>
         </div>
 

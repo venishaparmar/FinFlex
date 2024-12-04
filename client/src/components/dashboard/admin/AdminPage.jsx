@@ -6,10 +6,8 @@ import {
   MailOutline,
   PermIdentity,
   PhoneAndroid,
-  Publish,
-  Logout,
 } from '@mui/icons-material';
-
+import LogoutButton from '../../LogoutButton';
 import Sidebar from '../../sidebar/Sidebar';
 import Admins from './AllAdmins';
 
@@ -87,14 +85,7 @@ export default function AdminPage({ setAuth }) {
               </Link>
 
               {/* Logout Button */}
-              <button
-                className="text-white hover:scale-105"
-                onClick={() => setAuth(false)}
-              >
-                <Link to="/login">
-                  <Logout fontSize="large" className="text-sm md:text-lg text-white" />
-                </Link>
-              </button>
+              <LogoutButton setAuth={setAuth} />
             </div>
           </div>
         </div>

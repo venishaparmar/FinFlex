@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { Logout } from '@mui/icons-material';
+import { useLocation} from 'react-router-dom';
+import LogoutButton from '../../../LogoutButton';
 import Sidebar from '../../../sidebar/Sidebar';
 import AddPayments from './AddPayments';
 
@@ -51,16 +51,8 @@ const PaymentLoansInfo = ({ setAuth }) => {
 
           {/* BUTTON */}
           <div className='text-white'>
-            <button
-              className=''
-              onClick={(e) => {
-                setAuth(false);
-              }}
-            >
-              <Link to='/login'>
-                <Logout />
-              </Link>
-            </button>
+            {/* Logout Button */}
+            <LogoutButton setAuth={setAuth} />
           </div>
         </div>
 

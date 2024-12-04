@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Logout } from '@mui/icons-material';
+import LogoutButton from '../../../LogoutButton';
 import { ToastContainer, toast } from 'react-toastify';
 import Sidebar from '../../../sidebar/Sidebar';
 
@@ -136,14 +136,8 @@ const EditBorrower = ({ setAuth }) => {
               <h3 className='text-lg font-medium text-white'>Update Borrower #{clientId}</h3>
               <p className='text-sm text-white'>Update all the required fields.</p>
             </div>
-            <button
-              className='text-white'
-              onClick={() => setAuth(false)}
-            >
-              <Link to='/login'>
-                <Logout />
-              </Link>
-            </button>
+            {/* Logout Button */}
+            <LogoutButton setAuth={setAuth} />
           </div>
 
           <form onSubmit={onSubmit} className='mt-5 p-8 h-full rounded border shadow-md border-t-4 border-t-blue-500'>
