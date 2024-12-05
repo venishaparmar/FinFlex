@@ -47,7 +47,7 @@ const Login = ({ setAuth }) => {
 
       if (response.ok && parseRes.token) {
         // Store the token in a cookie
-        document.cookie = `token=${parseRes.token}; path=/; max-age=7200;`; // 1-day expiration (86400 seconds)
+        document.cookie = `token=${parseRes.token}; path=/; max-age=7200;`; 
 
         loginSuccessful();
         setTimeout(() => setAuth(true), 1500);
@@ -59,7 +59,7 @@ const Login = ({ setAuth }) => {
       console.error('Login Error:', error.message);
     } finally {
       setLoading(false);
-    }
+    } 
   };
 
   return (

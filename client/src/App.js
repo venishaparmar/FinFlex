@@ -52,7 +52,7 @@ function App() {
       setIsAuthenticated(boolean);
       if (boolean) {
         // Set the cookie to expire in 1 day (86400 seconds)
-        document.cookie = `isAuthenticated=true; path=/; max-age=86400;`;
+        document.cookie = `isAuthenticated=true; path=/; max-age=7200;`;
       } else {
         // Delete the cookie by setting its expiration date to the past
         document.cookie = `isAuthenticated=; path=/; max-age=0;`;

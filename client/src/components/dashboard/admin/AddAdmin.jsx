@@ -88,6 +88,7 @@ const AddAdmin = ({ setAuth }) => {
       <div className='w-full h-full border bg-white shadow-md rounded'>
         
         <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
+
           {/* HEADER */}
           <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
             {/* TITLE */}

@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import emailjs from 'emailjs-com';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Message({ email }) {
   const [fullname, setFullname] = useState('');
@@ -26,7 +28,7 @@ export default function Message({ email }) {
       console.log(error);
     }
   };
-
+  const navigate = useNavigate();
   const addSuccessful = () => {
     toast.promise(
       new Promise((resolve) => {
@@ -77,6 +79,9 @@ export default function Message({ email }) {
       );
     
     addSuccessful();
+    setTimeout(() => {
+      navigate('/home');
+    }, 3000);
   };
 
   useEffect(() => {
