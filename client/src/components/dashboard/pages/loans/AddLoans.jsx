@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LogoutButton from '../../../LogoutButton';
 import { ToastContainer, toast } from 'react-toastify';
 
 import Sidebar from '../../../sidebar/Sidebar';
+import { use } from 'react';
 
 const AddLoans = ({ setAuth }) => {
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
+  useEffect(() => {
+    getClientsName();
+  }, []);
+
   const [inputs, setInputs] = useState({
     client_id: '',
     status: '',
@@ -53,28 +66,81 @@ const AddLoans = ({ setAuth }) => {
     );
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  //fetch names for client_id
+  const [clients, setClients] = useState([]);
+  const getClientsName = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/clientName', {
+        method: 'GET',
+        headers: { Authorization: getCookie('token') },
+      });
+
+      const parseRes = await response.json();
+      setClients(parseRes);
+
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  const validateForm = () => {
+    let errorMessages = [];
   
-    // Ensure all fields are filled
-    if (
-      !client_id ||
-      !type ||
-      !status ||
-      !gross_loan ||
-      !balance ||
-      !amort ||
-      !terms ||
-      !date_released ||
-      !maturity_date
-    ) {
-      toast.error('Please fill all fields.', { autoClose: 2000 });
-      return;
+    // Check for missing fields
+    if (!client_id?.trim()) errorMessages.push("Client ID is required.");
+    if (!type?.trim()) errorMessages.push("Type of Loan is required.");
+    if (!status?.trim()) errorMessages.push("Status is required.");
+    if (!gross_loan) errorMessages.push("Gross Loan is required.");
+    if (!balance) errorMessages.push("Balance is required.");
+    if (!amort) errorMessages.push("Amortization is required.");
+    if (!terms) errorMessages.push("Terms are required.");
+    if (!date_released) errorMessages.push("Date Released is required.");
+    if (!maturity_date) errorMessages.push("Maturity Date is required.");
+  
+    // Check for negative values
+    if (gross_loan < 0) errorMessages.push("Gross Loan cannot be negative.");
+    if (balance < 0) errorMessages.push("Balance cannot be negative.");
+    if (amort < 0) errorMessages.push("Amortization cannot be negative.");
+    if (terms < 0) errorMessages.push("Terms cannot be negative.");
+  
+    // Check balance is less than or equal to gross loan
+    if (balance > gross_loan) {
+      errorMessages.push("Balance cannot be greater than Gross Loan.");
     }
   
     // Check if maturity date is after the release date
     if (new Date(maturity_date) <= new Date(date_released)) {
-      toast.error('Maturity date must be after the release date.', { autoClose: 2000 });
+      errorMessages.push("Maturity date must be after the release date.");
+    } else {
+      // Calculate expected maturity date based on terms
+      const releaseDate = new Date(date_released);
+      const expectedMaturityDate = new Date(releaseDate);
+      expectedMaturityDate.setMonth(releaseDate.getMonth() + parseInt(terms)); // Add terms (in months)
+  
+      // Check if the actual maturity date is at least as far as the expected maturity date
+      if (new Date(maturity_date) < expectedMaturityDate) {
+        errorMessages.push(
+          `Maturity date must be at least ${terms} months after the release date.`
+        );
+      }
+    }
+  
+    // Display error messages
+    if (errorMessages.length > 0) {
+      toast.error(errorMessages.join(" "), { autoClose: 3000 });
+      return false; // Validation failed
+    }
+  
+    return true; // Validation passed
+  };
+
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      // Validation failed
       return;
     }
   
@@ -88,9 +154,9 @@ const AddLoans = ({ setAuth }) => {
         let sec = x.getSeconds().toString().padStart(2, '0');
         return `${hour}:${min}:${sec}`;
       };
-  
+
       const timestamp = `${date_released} ${formatTime(timenow)}`;
-  
+
       const body = {
         client_id,
         type,
@@ -102,13 +168,6 @@ const AddLoans = ({ setAuth }) => {
         date_released,
         maturity_date,
       };
-      
-      const getCookie = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return null;
-      };
 
       const response = await fetch(`http://localhost:8000/loans`, {
         method: 'POST',
@@ -118,10 +177,10 @@ const AddLoans = ({ setAuth }) => {
         },
         body: JSON.stringify(body),
       });
-  
+
       const parseRes = await response.json();
       addSuccessful();
-  
+
       setTimeout(() => {
         navigate(`/Borrower/${client_id}`);
       }, 3000);
@@ -130,7 +189,7 @@ const AddLoans = ({ setAuth }) => {
       toast.error('An error occurred while adding the loan.');
     }
   };
-  
+
 
 
 
@@ -165,16 +224,28 @@ const AddLoans = ({ setAuth }) => {
           {/* CLIENT ID */}
           <div>
             <label htmlFor='client_id' className='block text-sm sm:text-base font-medium mb-2'>
-              Client ID:
+              Client:
             </label>
-            <input
-              type='number'
+            <select
               className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
-              placeholder='Client ID'
               name='client_id'
               value={client_id}
               onChange={(e) => onChange(e)}
-            />
+            >
+              <option value='' disabled>
+                Select Client
+              </option>
+              {clients.length === 0 ? (<option value='' disabled>
+                Please add a client first
+              </option>) : (
+                clients.map((client) => (
+                  <option key={client.id} value={client.id}>
+                    {`${client.firstname} ${client.lastname}`}
+                  </option>
+                ))
+              )}
+              {/* Add more options as needed */}
+            </select>
           </div>
 
           {/* TYPE */}
@@ -189,6 +260,9 @@ const AddLoans = ({ setAuth }) => {
               value={type}
               onChange={(e) => onChange(e)}
             >
+              <option value='' disabled>
+                Select Type of Loan
+              </option>
               <option value='Personal Loan'>Personal Loan</option>
               <option value='Salary Loan'>Salary Loan</option>
               <option value='Business Loan'>Business Loan</option>
@@ -207,6 +281,9 @@ const AddLoans = ({ setAuth }) => {
               value={status}
               onChange={(e) => onChange(e)}
             >
+              <option value='' disabled>
+                Select Status
+              </option>
               <option value='Approved'>Approved</option>
               <option value='Fully Paid'>Fully Paid</option>
               <option value='Disbursed'>Disbursed</option>
@@ -272,6 +349,9 @@ const AddLoans = ({ setAuth }) => {
               value={terms}
               onChange={(e) => onChange(e)}
             >
+              <option value='' disabled>
+                Select Terms
+              </option>
               <option value='1'>1 Month</option>
               <option value='2'>2 Months</option>
               <option value='3'>3 Months</option>
@@ -279,6 +359,13 @@ const AddLoans = ({ setAuth }) => {
               <option value='5'>5 Months</option>
               <option value='6'>6 Months</option>
               <option value='12'>12 Months</option>
+              <option value='18'>18 Month</option>
+              <option value='24'>24 Months</option>
+              <option value='30'>30 Months</option>
+              <option value='36'>36 Months</option>
+              <option value='42'>42 Months</option>
+              <option value='48'>48 Months</option>
+              <option value='54'>54 Months</option>
             </select>
           </div>
 

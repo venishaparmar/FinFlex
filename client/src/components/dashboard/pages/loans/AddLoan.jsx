@@ -23,6 +23,7 @@ const AddLoan = ({ setAuth }) => {
 
   const {
     type,
+    status,
     gross_loan,
     balance,
     amort,
@@ -59,12 +60,66 @@ const AddLoan = ({ setAuth }) => {
     if (parts.length === 2) return parts.pop().split(';').shift();
     return null;
   };
+  
+  const validateForm = () => {
+    let errorMessages = [];
+  
+    // Check for missing fields
+    if (!type?.trim()) errorMessages.push("Type of Loan is required.");
+    if (!status?.trim()) errorMessages.push("Status is required.");
+    if (!gross_loan) errorMessages.push("Gross Loan is required.");
+    if (!balance) errorMessages.push("Balance is required.");
+    if (!amort) errorMessages.push("Amortization is required.");
+    if (!terms) errorMessages.push("Terms are required.");
+    if (!date_released) errorMessages.push("Date Released is required.");
+    if (!maturity_date) errorMessages.push("Maturity Date is required.");
+  
+    // Check for negative values
+    if (gross_loan < 0) errorMessages.push("Gross Loan cannot be negative.");
+    if (balance < 0) errorMessages.push("Balance cannot be negative.");
+    if (amort < 0) errorMessages.push("Amortization cannot be negative.");
+    if (terms < 0) errorMessages.push("Terms cannot be negative.");
+  
+    // Check balance is less than or equal to gross loan
+    if (balance > gross_loan) {
+      errorMessages.push("Balance cannot be greater than Gross Loan.");
+    }
+  
+    // Check if maturity date is after the release date
+    if (new Date(maturity_date) <= new Date(date_released)) {
+      errorMessages.push("Maturity date must be after the release date.");
+    } else {
+      // Calculate expected maturity date based on terms
+      const releaseDate = new Date(date_released);
+      const expectedMaturityDate = new Date(releaseDate);
+      expectedMaturityDate.setMonth(releaseDate.getMonth() + parseInt(terms)); // Add terms (in months)
+  
+      // Check if the actual maturity date is at least as far as the expected maturity date
+      if (new Date(maturity_date) < expectedMaturityDate) {
+        errorMessages.push(
+          `Maturity date must be at least ${terms} months after the release date.`
+        );
+      }
+    }
+  
+    // Display error messages
+    if (errorMessages.length > 0) {
+      toast.error(errorMessages.join(" "), { autoClose: 3000 });
+      return false; // Validation failed
+    }
+  
+    return true; // Validation passed
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
+
     try {
       const body = {
         type,
+        status,
         gross_loan,
         balance,
         amort,

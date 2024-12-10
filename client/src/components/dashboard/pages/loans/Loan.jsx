@@ -40,38 +40,45 @@ const LoanInfo = () => {
     }
   };
 
-  const deleteNotif = () => {
-    toast.promise(
-      new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve();
-        }, 2000);
-      }),
-      {
-        pending: 'Deleting Loan...',
-        success: 'Deleted Succesfully!',
-        error: 'Error!',
-      },
-      {
-        autoClose: 2000,
-      }
-    );
-  };
-  // Delete loan Function
+  
+  // Delete Loan Function
   async function deleteLoan(id) {
     try {
-      await fetch(`http://localhost:8000/loans/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: getCookie('token') },
-      });
-      deleteNotif();
-      setTimeout(() => {
-        setLoans(loans.filter((loan) => loan.id !== id));
-      }, 2000);
+      // Create a promise for toast handling
+      await toast.promise(
+        new Promise(async (resolve, reject) => {
+          const response = await fetch(`http://localhost:8000/loans/${id}`, {
+            method: 'DELETE',
+            headers: { Authorization: getCookie('token') },
+          });
+
+          if (!response.ok) {
+            const errorMessage = `Failed to delete loan as it has payment history`;
+            toast.error(errorMessage, { autoClose: 2000 });
+            reject(new Error(errorMessage));
+            return;
+          }
+
+          // If successful, resolve the promise
+          resolve();
+
+          // Update state and UI
+          setLoans(loans.filter((loan) => loan.id !== id));
+        }),
+        {
+          pending: 'Deleting Loan...',
+          success: 'Loan deleted successfully!',
+          error: 'Error while deleting loan!',
+        },
+        {
+          autoClose: 2000,
+        }
+      );
     } catch (error) {
       console.log(error.message);
     }
   }
+
 
   useEffect(() => {
     GetLoans();

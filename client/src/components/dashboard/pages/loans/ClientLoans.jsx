@@ -53,15 +53,36 @@ const Loans = ({ setAuth }) => {
 
   async function deleteLoan(id) {
     try {
-      await fetch(`http://localhost:8000/loans/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: getCookie('token') },
-      });
+      await toast.promise(
+        new Promise(async (resolve, reject) => {
+          const response = await fetch(`http://localhost:8000/loans/${id}`, {
+            method: 'DELETE',
+            headers: { Authorization: getCookie('token') },
+          });
 
-      deleteNotif();
-      setTimeout(() => {
-        setLoans(loans.filter((loan) => loan.id !== id));
-      }, 2000);
+
+          if (!response.ok) {
+            const errorMessage = `Failed to delete loan as it has payment history`;
+            toast.error(errorMessage, { autoClose: 2000 });
+            reject(new Error(errorMessage));
+            return;
+          }
+
+          // If successful, resolve the promise
+          resolve();
+
+          // Update state and UI
+          setLoans(loans.filter((loan) => loan.id !== id));
+        }),
+        {
+          pending: 'Deleting Loan...',
+          success: 'Loan deleted successfully!',
+          error: 'Error while deleting loan!',
+        },
+        {
+          autoClose: 2000,
+        }
+      );
     } catch (error) {
       console.log(error.message);
     }
@@ -81,12 +102,12 @@ const Loans = ({ setAuth }) => {
           <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
             {/* TITLE */}
             <div className='text-sm md:text-md text-white pl-2'>
-            <Sidebar />
-          </div>
-          <div className='flex-grow px-4 text-center'>
-            <h3 className='text-lg font-medium text-white'>Loans Report</h3>
-            <p className='text-sm text-white'>Loans summary and informations.</p>
-          </div>
+              <Sidebar />
+            </div>
+            <div className='flex-grow px-4 text-center'>
+              <h3 className='text-lg font-medium text-white'>Loans Report</h3>
+              <p className='text-sm text-white'>Loans summary and informations.</p>
+            </div>
             {/* BUTTON */}
 
             <div className='text-white'>
@@ -169,8 +190,8 @@ const Loans = ({ setAuth }) => {
                             {loan.status}
                           </span> */}
                           {loan.status === 'Approved' ||
-                          loan.status === 'Fully Paid' ||
-                          loan.status === 'Disbursed' ? (
+                            loan.status === 'Fully Paid' ||
+                            loan.status === 'Disbursed' ? (
                             <span className=' bg-green-500 text-white px-4 py-1 rounded-md whitespace-nowrap'>
                               {loan.status}
                             </span>

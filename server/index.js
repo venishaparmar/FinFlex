@@ -4,8 +4,10 @@ import { connection as pool } from './db.js'; // Ensure this imports `connection
 import { generateJWT } from './utils/jwtGenerator.js';
 import { auth } from './middlewares/auth.js';
 import cors from 'cors';
+import bcrypt from 'bcryptjs';
 
 const app = express();
+
 app.use(bodyParser.json());
 app.use(cors());
 const PORT = 8000;
@@ -26,10 +28,13 @@ app.post('/login', async (req, res) => {
       return res.status(401).send('Username or password is wrong');
     }
 
-    // Directly compare passwords (no bcrypt)
-    if (password !== admin[0].password) {
-      return res.status(401).send('Username or password is wrong');
+    const isValidPassword = await bcrypt.compare(password, admin[0].password);
+    if (!isValidPassword) {
+
+      console.log('Hashed Password:', hashedPassword)
+      return res.status(401).json({ message: 'Invalid username or password' });
     }
+
 
     const token = generateJWT(admin[0]);
     res.json({ token });
@@ -43,7 +48,8 @@ app.post('/login', async (req, res) => {
 app.post('/addAdmin', async (req, res) => {
   try {
     const { firstname, lastname, contactNumber, address, email, username, password } = req.body;
-
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
     const admin = await query(`SELECT * FROM admin WHERE username = ?`, [username]);
     if (admin.length > 0) {
       return res.status(401).send('User already exists');
@@ -51,7 +57,7 @@ app.post('/addAdmin', async (req, res) => {
 
     const result = await query(
       `INSERT INTO admin (firstname, lastname, contactnumber, address, email, password, username) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [firstname, lastname, contactNumber, address, email, password, username]
+      [firstname, lastname, contactNumber, address, email, hashedPassword, username]
     );
 
     const newAdmin = await query(`SELECT * FROM admin WHERE id = ?`, [result.insertId]);
@@ -99,6 +105,18 @@ app.get('/profile', auth, async (req, res) => {
 app.get('/allClients', auth, async (req, res) => {
   try {
     const getClient = await query(`SELECT * FROM clients`);
+
+    res.json(getClient);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error fetching clients');
+  }
+});
+
+//client names for client id dropdown
+app.get('/clientName', auth, async (req, res) => {
+  try {
+    const getClient = await query(`SELECT id, firstname, lastname FROM clients`);
 
     res.json(getClient);
   } catch (error) {
@@ -718,7 +736,7 @@ app.get('/payments/:id', auth, async (req, res) => {
 
     // Use parameterized queries to prevent SQL Injection
     const [getPayments] = await pool.query(
-      `SELECT * FROM payments WHERE client_id = ?;`, 
+      `SELECT * FROM payments WHERE client_id = ?;`,
       [id]
     );
 

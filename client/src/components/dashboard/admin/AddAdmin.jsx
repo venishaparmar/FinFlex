@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../sidebar/Sidebar';
@@ -14,7 +13,10 @@ const AddAdmin = ({ setAuth }) => {
     address: '',
     username: '',
     password: '',
+    contactNumber: '',
   });
+
+  const [errors, setErrors] = useState({});
 
   const {
     firstname,
@@ -30,6 +32,23 @@ const AddAdmin = ({ setAuth }) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  const validateInputs = () => {
+    const newErrors = {};
+
+    if (!firstname.trim()) newErrors.firstname = 'First name is required.';
+    if (!lastname.trim()) newErrors.lastname = 'Last name is required.';
+    if (!email.match(/^\S+@\S+\.\S+$/)) newErrors.email = 'Invalid email format.';
+    if (!contactNumber.match(/^[0-9]{10}$/))
+      newErrors.contactNumber = 'Contact number must be 10 digits.';
+    if (!address.trim()) newErrors.address = 'Address is required.';
+    if (!username.trim()) newErrors.username = 'Username is required.';
+    if (password.length < 6)
+      newErrors.password = 'Password must be at least 6 characters long.';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const addSuccessful = () => {
     toast.promise(
       new Promise((resolve, reject) => {
@@ -39,7 +58,7 @@ const AddAdmin = ({ setAuth }) => {
       }),
       {
         pending: 'Adding New Admin...',
-        success: 'Added Succesfully!',
+        success: 'Added Successfully!',
         error: 'Error!',
       },
       {
@@ -47,10 +66,14 @@ const AddAdmin = ({ setAuth }) => {
       }
     );
   };
+
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateInputs()) return;
+
     try {
       const body = {
         firstname,
@@ -72,12 +95,17 @@ const AddAdmin = ({ setAuth }) => {
 
       const parseRes = await response.json();
 
-      addSuccessful();
-      setTimeout(() => {
-        navigate(-1);
-      }, 3000);
+      if (response.ok) {
+        addSuccessful();
+        setTimeout(() => {
+          navigate(-1);
+        }, 3000);
+      } else {
+        toast.error(parseRes.message || 'Error adding admin.');
+      }
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
+      toast.error('An unexpected error occurred.');
     }
   };
 
@@ -86,12 +114,8 @@ const AddAdmin = ({ setAuth }) => {
       <ToastContainer />
 
       <div className='w-full h-full border bg-white shadow-md rounded'>
-        
-        <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white  rounded '>
-
-          {/* HEADER */}
+        <div className='w-full px-8 pt-6 pb-8 mb-4 bg-white rounded '>
           <div className='flex items-center justify-between px-4 py-5 sm:px-6 bg-blue-500 rounded shadow-md '>
-            {/* TITLE */}
             <div className='text-white'>
               <Sidebar />
             </div>
@@ -100,115 +124,109 @@ const AddAdmin = ({ setAuth }) => {
               <p className='text-sm text-white'>Register all the required fields.</p>
             </div>
             <ToastContainer />
-
             <div className='text-white'>
-              {/* Logout Button */}
               <LogoutButton setAuth={setAuth} />
             </div>
           </div>
 
           <form
-            onSubmit={(e) => {
-              onSubmit(e);
-            }}
+            onSubmit={onSubmit}
             className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-blue-500 '
           >
-            {/* FIRST NAME */}
             <label htmlFor='firstname'>First Name: </label>
             <input
               type='text'
-              className='block border border-grey-500 w-full p-3 rounded mb-4'
+              className={`block border w-full p-3 rounded mb-4 ${
+                errors.firstname && 'border-red-500'
+              }`}
               name='firstname'
               value={firstname}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='First Name'
-              required
             />
-            {/* LAST NAME */}
+            {errors.firstname && <p className='text-red-500'>{errors.firstname}</p>}
+
             <label htmlFor='lastname'>Last Name: </label>
             <input
               type='text'
-              className='block border border-grey-500 w-full p-3 rounded mb-4'
+              className={`block border w-full p-3 rounded mb-4 ${
+                errors.lastname && 'border-red-500'
+              }`}
               name='lastname'
               value={lastname}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Last Name'
-              required
             />
-            {/* CONTACT NUMBER */}
+            {errors.lastname && <p className='text-red-500'>{errors.lastname}</p>}
+
             <label htmlFor='contactNumber'>Contact Number: </label>
             <input
-              type='number'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
+              type='text'
+              className={`block border w-full p-3 rounded mb-4 ${
+                errors.contactNumber && 'border-red-500'
+              }`}
               name='contactNumber'
               value={contactNumber}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Contact Number'
-              required
             />
-            {/* ADDRESS */}
+            {errors.contactNumber && <p className='text-red-500'>{errors.contactNumber}</p>}
+
             <label htmlFor='address'>Address: </label>
             <input
               type='text'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
+              className={`block border w-full p-3 rounded mb-4 ${
+                errors.address && 'border-red-500'
+              }`}
               name='address'
               value={address}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Address'
-              required
             />
-            {/* EMAIL ADDRESS */}
+            {errors.address && <p className='text-red-500'>{errors.address}</p>}
+
             <label htmlFor='email'>Email Address: </label>
             <input
               type='email'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
+              className={`block border w-full p-3 rounded mb-4 ${
+                errors.email && 'border-red-500'
+              }`}
               name='email'
               value={email}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Email'
-              required
             />
-            {/* PASSWORD */}
+            {errors.email && <p className='text-red-500'>{errors.email}</p>}
+
             <label htmlFor='password'>Password: </label>
             <input
               type='password'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
+              className={`block border w-full p-3 rounded mb-4 ${
+                errors.password && 'border-red-500'
+              }`}
               name='password'
               value={password}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='**********'
-              required
             />
-            {/* USERNAME */}
+            {errors.password && <p className='text-red-500'>{errors.password}</p>}
+
             <label htmlFor='username'>Username: </label>
             <input
               type='text'
-              className='block border border-grey-500t w-full p-3 rounded mb-4'
+              className={`block border w-full p-3 rounded mb-4 ${
+                errors.username && 'border-red-500'
+              }`}
               name='username'
               value={username}
-              onChange={(e) => {
-                onChange(e);
-              }}
+              onChange={onChange}
               placeholder='Username'
-              required
             />
+            {errors.username && <p className='text-red-500'>{errors.username}</p>}
 
-            {/* BUTTONS */}
             <button
               type='submit'
-              className=' bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6'
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6'
             >
               Save
             </button>

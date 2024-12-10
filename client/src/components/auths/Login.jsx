@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { ArrowBackIosNew } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Ensure you import this CSS file
+import 'react-toastify/dist/ReactToastify.css'; 
+
 
 const Login = ({ setAuth }) => {
+  
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
@@ -16,7 +18,7 @@ const Login = ({ setAuth }) => {
   };
 
   const loginSuccessful = () => {
-    toast.success('Logged in Successfully!', { autoClose: 1500, position: 'top-right' });
+    toast.success('Logged in Successfully!', { autoClose: 5000, position: 'top-right' });
   };
 
   const loginFailed = (message) => {
@@ -50,7 +52,7 @@ const Login = ({ setAuth }) => {
         document.cookie = `token=${parseRes.token}; path=/; max-age=7200;`; 
 
         loginSuccessful();
-        setTimeout(() => setAuth(true), 1500);
+        setTimeout(() => setAuth(true), 5000);
       } else {
         loginFailed(parseRes.message || 'Invalid username or password');
       }
