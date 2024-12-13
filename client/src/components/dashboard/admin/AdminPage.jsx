@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   LocationOnOutlined,
   MailOutline,
@@ -45,7 +45,7 @@ export default function AdminPage({ setAuth }) {
 
   useEffect(() => {
     getAdmin();
-  }, []);
+  });
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">

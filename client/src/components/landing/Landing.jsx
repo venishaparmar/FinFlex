@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import image1 from './Revenue-pana1.png';
 import image2 from './Business deal-pana.png';
@@ -9,8 +9,6 @@ import {
   PermIdentity,
   CreditScore,
   ReceiptLong,
-  MailOutline,
-  Home,
 } from '@mui/icons-material';
 
 const Landing = () => {
