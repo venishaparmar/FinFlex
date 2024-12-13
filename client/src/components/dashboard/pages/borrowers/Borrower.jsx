@@ -45,7 +45,7 @@ export default function Borrower({ setAuth }) {
         setContactNumber(parseRes.contactnumber);
         setAddress(parseRes.address);
         setEmail(parseRes.email);
-        setClient(parseRes); // Set the full client data for further use
+        setClient(parseRes); 
       } else {
         console.error('Invalid response format:', parseRes);
       }

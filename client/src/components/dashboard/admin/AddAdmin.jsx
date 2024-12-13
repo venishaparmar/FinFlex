@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from '../../sidebar/Sidebar';
@@ -28,26 +28,32 @@ const AddAdmin = ({ setAuth }) => {
     password,
   } = inputs;
 
+  // Function to handle changes with validation
   const onChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === 'firstname' || name === 'lastname') {
+      // Allow only alphabets
+      if (/^[A-Za-z]*$/.test(value) || value === '') {
+        setInputs({ ...inputs, [name]: value });
+      }
+    } else if (name === 'contactNumber') {
+      // Allow only 10 digits
+      if (/^\d{0,10}$/.test(value)) {
+        setInputs({ ...inputs, [name]: value });
+      }
+    } else if (name === 'address') {
+      // Allow alphabets, numbers, spaces, and common punctuation
+      if (/^[A-Za-z0-9\s,.'-]*$/.test(value) || value === '') {
+        setInputs({ ...inputs, [name]: value });
+      }
+    } else {
+      // Default case for email and username
+      setInputs({ ...inputs, [name]: value });
+    }
   };
 
-  const validateInputs = () => {
-    const newErrors = {};
-
-    if (!firstname.trim()) newErrors.firstname = 'First name is required.';
-    if (!lastname.trim()) newErrors.lastname = 'Last name is required.';
-    if (!email.match(/^\S+@\S+\.\S+$/)) newErrors.email = 'Invalid email format.';
-    if (!contactNumber.match(/^[0-9]{10}$/))
-      newErrors.contactNumber = 'Contact number must be 10 digits.';
-    if (!address.trim()) newErrors.address = 'Address is required.';
-    if (!username.trim()) newErrors.username = 'Username is required.';
-    if (password.length < 6)
-      newErrors.password = 'Password must be at least 6 characters long.';
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  
 
   const addSuccessful = () => {
     toast.promise(
@@ -66,13 +72,24 @@ const AddAdmin = ({ setAuth }) => {
       }
     );
   };
-
+  const validateEmail = (email) => {
+    // Basic email regex
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
   const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateInputs()) return;
+    // Validation before submission
+    if (!validateEmail(email)) {
+      console.error('Invalid email format.');
+      return;
+    }
+    if (contactNumber.length !== 10) {
+      console.error('Contact number must be 10 digits.');
+      return;
+    }
 
     try {
       const body = {
@@ -131,12 +148,12 @@ const AddAdmin = ({ setAuth }) => {
 
           <form
             onSubmit={onSubmit}
-            className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-blue-500 '
+            className='mt-5 p-8 rounded border shadow-md border-t-4 border-t-blue-500'
           >
             <label htmlFor='firstname'>First Name: </label>
             <input
               type='text'
-              className={`block border w-full p-3 rounded mb-4 ${
+              className={`block border border-grey-500 w-full p-3 rounded mb-4 ${
                 errors.firstname && 'border-red-500'
               }`}
               name='firstname'
@@ -149,7 +166,7 @@ const AddAdmin = ({ setAuth }) => {
             <label htmlFor='lastname'>Last Name: </label>
             <input
               type='text'
-              className={`block border w-full p-3 rounded mb-4 ${
+              className={`block border border-grey-500 w-full p-3 rounded mb-4 ${
                 errors.lastname && 'border-red-500'
               }`}
               name='lastname'
@@ -162,7 +179,7 @@ const AddAdmin = ({ setAuth }) => {
             <label htmlFor='contactNumber'>Contact Number: </label>
             <input
               type='text'
-              className={`block border w-full p-3 rounded mb-4 ${
+              className={`block border border-grey-500 w-full p-3 rounded mb-4 ${
                 errors.contactNumber && 'border-red-500'
               }`}
               name='contactNumber'
@@ -175,7 +192,7 @@ const AddAdmin = ({ setAuth }) => {
             <label htmlFor='address'>Address: </label>
             <input
               type='text'
-              className={`block border w-full p-3 rounded mb-4 ${
+              className={`block border border-grey-500 w-full p-3 rounded mb-4 ${
                 errors.address && 'border-red-500'
               }`}
               name='address'
@@ -188,7 +205,7 @@ const AddAdmin = ({ setAuth }) => {
             <label htmlFor='email'>Email Address: </label>
             <input
               type='email'
-              className={`block border w-full p-3 rounded mb-4 ${
+              className={`block border border-grey-500 w-full p-3 rounded mb-4 ${
                 errors.email && 'border-red-500'
               }`}
               name='email'
@@ -201,7 +218,7 @@ const AddAdmin = ({ setAuth }) => {
             <label htmlFor='password'>Password: </label>
             <input
               type='password'
-              className={`block border w-full p-3 rounded mb-4 ${
+              className={`block border border-grey-500 w-full p-3 rounded mb-4 ${
                 errors.password && 'border-red-500'
               }`}
               name='password'
@@ -214,7 +231,7 @@ const AddAdmin = ({ setAuth }) => {
             <label htmlFor='username'>Username: </label>
             <input
               type='text'
-              className={`block border w-full p-3 rounded mb-4 ${
+              className={`block border border-grey-500 w-full p-3 rounded mb-4 ${
                 errors.username && 'border-red-500'
               }`}
               name='username'
@@ -223,17 +240,19 @@ const AddAdmin = ({ setAuth }) => {
               placeholder='Username'
             />
             {errors.username && <p className='text-red-500'>{errors.username}</p>}
-
-            <button
-              type='submit'
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6'
-            >
-              Save
-            </button>
-
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/6 ml-10'>
-              <Link to='/admin'>Cancel</Link>
-            </button>
+            <div className='flex flex-col sm:flex-row sm:justify-start'>
+              <button
+                type='submit'
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-2 sm:mb-0 sm:mr-4 w-full sm:w-auto'
+              >
+                Save
+              </button>
+              <Link to='/admin' className='w-full sm:w-auto'>
+                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full'>
+                  Cancel
+                </button>
+              </Link>
+            </div>
           </form>
         </div>
       </div>

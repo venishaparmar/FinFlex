@@ -188,6 +188,9 @@ const AddLoan = ({ setAuth }) => {
               value={type}
               onChange={(e) => onChange(e)}
             >
+              <option value='' disabled>
+              Select Type of Loan
+              </option>
               <option value="Personal Loan">Personal Loan</option>
               <option value="Salary Loan">Salary Loan</option>
               <option value="Business Loan">Business Loan</option>
@@ -197,13 +200,22 @@ const AddLoan = ({ setAuth }) => {
           {/* STATUS */}
           <div className="mb-4">
             <label htmlFor="maturity_date">Status:</label>
-            <input
-              className="block border border-grey-500 w-full p-3 rounded"
-              name="status"
-              id="status"
-              value="Pending"
-              disabled
-            />
+            <select
+              className='block w-full border border-gray-300 p-2 sm:p-3 rounded mb-4 text-sm sm:text-base'
+              name='status'
+              id='status'
+              value={status}
+              onChange={(e) => onChange(e)}
+            >
+              <option value='' disabled>
+                Select Status
+              </option>
+              <option value='Approved'>Approved</option>
+              <option value='Fully Paid'>Fully Paid</option>
+              <option value='Disbursed'>Disbursed</option>
+              <option value='Pending'>Pending</option>
+              <option value='Declined'>Declined</option>
+            </select>
           </div>
 
           {/* GROSS LOAN */}
