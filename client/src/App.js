@@ -104,7 +104,7 @@ function App() {
                 ) : (
                   <Navigate to='/login' />
                 )
-              }
+              }       
             />
             <Route
               exact

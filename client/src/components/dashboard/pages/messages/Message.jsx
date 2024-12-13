@@ -145,6 +145,9 @@ export default function Message({ email }) {
                 name="subject"
                 id="subject"
               >
+                <option value='' disabled>
+                Select Subject
+              </option>
                 <option value="Loan Approval">Loan Approval</option>
                 <option value="Loan Denied">Loan Denied</option>
                 <option value="Loan Disbursed">Loan Disbursed</option>
